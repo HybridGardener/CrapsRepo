@@ -1,0 +1,9 @@
+c:\users\binfoeri\source\repos\CrapsGame\CrapsGame.Models\obj\Debug\netstandard2.0\CrapsGame.Models.csprojAssemblyReference.cache
+c:\users\binfoeri\source\repos\CrapsGame\CrapsGame.Models\obj\Debug\netstandard2.0\CrapsGame.Models.csproj.CoreCompileInputs.cache
+c:\users\binfoeri\source\repos\CrapsGame\CrapsGame.Models\obj\Debug\netstandard2.0\CrapsGame.Models.AssemblyInfoInputs.cache
+c:\users\binfoeri\source\repos\CrapsGame\CrapsGame.Models\obj\Debug\netstandard2.0\CrapsGame.Models.AssemblyInfo.cs
+c:\users\binfoeri\source\repos\CrapsGame\CrapsGame.Models\bin\Debug\netstandard2.0\CrapsGame.Models.deps.json
+c:\users\binfoeri\source\repos\CrapsGame\CrapsGame.Models\bin\Debug\netstandard2.0\CrapsGame.Models.dll
+c:\users\binfoeri\source\repos\CrapsGame\CrapsGame.Models\bin\Debug\netstandard2.0\CrapsGame.Models.pdb
+c:\users\binfoeri\source\repos\CrapsGame\CrapsGame.Models\obj\Debug\netstandard2.0\CrapsGame.Models.dll
+c:\users\binfoeri\source\repos\CrapsGame\CrapsGame.Models\obj\Debug\netstandard2.0\CrapsGame.Models.pdb

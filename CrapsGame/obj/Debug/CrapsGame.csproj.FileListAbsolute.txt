@@ -1,0 +1,17 @@
+c:\users\binfoeri\source\repos\CrapsGame\CrapsGame\bin\Debug\CrapsGame.exe.config
+c:\users\binfoeri\source\repos\CrapsGame\CrapsGame\bin\Debug\CrapsGame.exe
+c:\users\binfoeri\source\repos\CrapsGame\CrapsGame\bin\Debug\CrapsGame.pdb
+c:\users\binfoeri\source\repos\CrapsGame\CrapsGame\bin\Debug\EntityFramework.dll
+c:\users\binfoeri\source\repos\CrapsGame\CrapsGame\bin\Debug\EntityFramework.SqlServer.dll
+c:\users\binfoeri\source\repos\CrapsGame\CrapsGame\bin\Debug\GameModels.dll
+c:\users\binfoeri\source\repos\CrapsGame\CrapsGame\bin\Debug\GameModels.pdb
+c:\users\binfoeri\source\repos\CrapsGame\CrapsGame\bin\Debug\EntityFramework.xml
+c:\users\binfoeri\source\repos\CrapsGame\CrapsGame\bin\Debug\EntityFramework.SqlServer.xml
+c:\users\binfoeri\source\repos\CrapsGame\CrapsGame\obj\Debug\CrapsGame.csprojAssemblyReference.cache
+c:\users\binfoeri\source\repos\CrapsGame\CrapsGame\obj\Debug\CrapsGame.Form1.resources
+c:\users\binfoeri\source\repos\CrapsGame\CrapsGame\obj\Debug\CrapsGame.Properties.Resources.resources
+c:\users\binfoeri\source\repos\CrapsGame\CrapsGame\obj\Debug\CrapsGame.csproj.GenerateResource.cache
+c:\users\binfoeri\source\repos\CrapsGame\CrapsGame\obj\Debug\CrapsGame.csproj.CoreCompileInputs.cache
+c:\users\binfoeri\source\repos\CrapsGame\CrapsGame\obj\Debug\CrapsGame.csproj.CopyComplete
+c:\users\binfoeri\source\repos\CrapsGame\CrapsGame\obj\Debug\CrapsGame.exe
+c:\users\binfoeri\source\repos\CrapsGame\CrapsGame\obj\Debug\CrapsGame.pdb

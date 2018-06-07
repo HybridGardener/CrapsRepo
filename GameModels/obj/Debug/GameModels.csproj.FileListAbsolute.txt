@@ -1,0 +1,6 @@
+c:\users\binfoeri\source\repos\CrapsGame\GameModels\bin\Debug\GameModels.dll
+c:\users\binfoeri\source\repos\CrapsGame\GameModels\bin\Debug\GameModels.pdb
+c:\users\binfoeri\source\repos\CrapsGame\GameModels\obj\Debug\GameModels.csprojAssemblyReference.cache
+c:\users\binfoeri\source\repos\CrapsGame\GameModels\obj\Debug\GameModels.csproj.CoreCompileInputs.cache
+c:\users\binfoeri\source\repos\CrapsGame\GameModels\obj\Debug\GameModels.dll
+c:\users\binfoeri\source\repos\CrapsGame\GameModels\obj\Debug\GameModels.pdb
