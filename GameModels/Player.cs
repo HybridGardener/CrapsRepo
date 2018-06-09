@@ -1,6 +1,10 @@
 ﻿using GameModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace GameModels
@@ -8,8 +12,9 @@ namespace GameModels
     public class Player : INPC
     {
         private int _id;
-        private int _name;
-
+        private string _name;
+        private BindingList<Game> _games;
+        [Key]
         public int Id
         {
             get { return _id; }
@@ -21,7 +26,7 @@ namespace GameModels
             }
         }
 
-        public int Name
+        public string Name
         {
             get { return _name; }
             set
@@ -31,6 +36,19 @@ namespace GameModels
                 NotifyPropertyChanged();
             }
         }
+
+       
+        public virtual BindingList<Game> Games
+        {
+            get => _games;
+            set
+            {
+                if (_games == value) return;
+                _games = value;
+                NotifyPropertyChanged();
+            }
+        }
+
 
     }
 }

@@ -1,18 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace GameModels
 {
     public class Game : INPC
     {
+        public static readonly Random numberGenerator = new Random();
 
         private int _id;
-        private int _name;
-        private ObservableCollection<DiceRoll> _rollsInGame;
+        private BindingList<DiceRoll> _rollsInGame;
         private bool _firstToss;
         private int _point;
+        private DiceRoll _rollInProgress;
+    
+
+
+        public Game()
+        {
+            RollsInGame = new BindingList<DiceRoll>();
+            RollInProgress = new DiceRoll();
+
+        }
 
         public int Id
         {
@@ -27,25 +39,29 @@ namespace GameModels
         public int Point
         {
             get { return _point; }
-            set {
+            set
+            {
                 if (_point == value) return;
                 _point = value;
                 NotifyPropertyChanged();
             }
 
         }
-        public ObservableCollection<DiceRoll> RollsInGame
+       
+
+
+
+        [NotMapped]
+        public DiceRoll RollInProgress
         {
-            get { return _rollsInGame; }
+            get => _rollInProgress;
             set
             {
-                if (_rollsInGame == value) return;
-                _rollsInGame = value;
+                if (_rollInProgress == value) return;
+                _rollInProgress = value;
                 NotifyPropertyChanged();
             }
         }
-
-
 
         public bool FirstToss
         {
@@ -60,26 +76,28 @@ namespace GameModels
             }
 
         }
-        public void shoot()
+        public void Shoot()
         {
-            var dice = new DiceRoll();
-            var sum = dice.Sum();
+            RollInProgress = new DiceRoll();
+            RollInProgress.DieOne = numberGenerator.Next(1, 6);
+            RollInProgress.DieTwo = numberGenerator.Next(1, 6);
+            var sum = RollInProgress.Sum();
             if (FirstToss)
             {
                 if (sum == 7 || sum == 11)
                 {
-                    dice.GameState = GameStateEnum.Winner;
+                    RollInProgress.GameState = GameStateEnum.Winner;
 
                 }
                 else if (sum == 2 || sum == 3 || sum == 12)
                 {
-                    dice.GameState = GameStateEnum.Craps;
+                    RollInProgress.GameState = GameStateEnum.Craps;
 
                 }
                 else if (sum == 4 || sum == 5 || sum == 6 || sum == 7 || sum == 9 || sum == 10)
                 {
                     Point = sum;
-                    dice.GameState = GameStateEnum.SetPoint;
+                    RollInProgress.GameState = GameStateEnum.SetPoint;
 
                 }
             }
@@ -87,25 +105,36 @@ namespace GameModels
             {
                 if (sum == Point)
                 {
-                    dice.GameState = GameStateEnum.Winner;
+                    RollInProgress.GameState = GameStateEnum.Winner;
                 }
-              else if (sum == 2 || sum == 3 || sum == 12)
+                else if (sum == 2 || sum == 3 || sum == 12)
                 {
-                    dice.GameState = GameStateEnum.Craps;
+                    RollInProgress.GameState = GameStateEnum.Craps;
 
                 }
-                if (sum == 7 ||sum ==12)
+                if (sum == 7 || sum == 12)
                 {
-                    dice.GameState = GameStateEnum.Craps;
+                    RollInProgress.GameState = GameStateEnum.Craps;
                 }
                 else if (sum == 4 || sum == 5 || sum == 6 || sum == 7 || sum == 9 || sum == 10)
                 {
                     Point = sum;
-                    dice.GameState = GameStateEnum.SetPoint;
+                    RollInProgress.GameState = GameStateEnum.SetPoint;
 
                 }
             }
+            RollsInGame.Add(RollInProgress);
 
-        } 
+        }
+        public virtual BindingList<DiceRoll> RollsInGame
+        {
+            get { return _rollsInGame; }
+            set
+            {
+                if (_rollsInGame == value) return;
+                _rollsInGame = value;
+                NotifyPropertyChanged();
+            }
+        }
     }
 }

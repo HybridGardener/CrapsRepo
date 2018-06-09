@@ -1,4 +1,6 @@
-﻿namespace GameModels
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace GameModels
 {
     public class DiceRoll : INPC
     {
@@ -6,6 +8,8 @@
         private int _dieOne;
         private int _dieTwo;
         private GameStateEnum _gameState;
+        private int? _gameId;
+        private Game game;
 
         public int Id
         {
@@ -56,6 +60,20 @@
             }
 
         }
+      
+
+        public int? GameId
+        {
+            get => _gameId;
+            set
+            {
+                if (_gameId == value) return;
+                _gameId = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+       
 
         public int Sum()
         {

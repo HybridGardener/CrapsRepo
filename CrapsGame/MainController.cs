@@ -3,41 +3,43 @@ using GameModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CrapsGame
 {
-    public class MainController:INPC
+    public class MainController : INPC
     {
+
         private Player _selectedPlayer;
         private Game _currentGame;
-        private ObservableCollection<Player> _players;
-
+        private BindingList<Player> _players;
+        private Player _newPlayer;
         public MainController()
         {
+            this.CurrentGame = new Game();
+            this.NewPlayer = new Player();
+            Players = new BindingList<Player>();
             LoadUi();
+            SelectedPlayer = Players.FirstOrDefault();
         }
-
-        private void LoadUi()
+        public Player NewPlayer
         {
-            var people = new List<Player>();
-            var games = new List<Game>();
-
-            using (var ctx = new GameContext())
+            get { return _newPlayer; }
+            set
             {
-                people = ctx.Players.ToList();
-                games = ctx.Games.ToList();
-
-
+                if (_newPlayer == value) return;
+                _newPlayer = value;
+                NotifyPropertyChanged();
             }
         }
-
         public Player SelectedPlayer
         {
             get { return _selectedPlayer; }
-            set {
+            set
+            {
                 if (_selectedPlayer == value) return;
                 _selectedPlayer = value;
                 NotifyPropertyChanged();
@@ -53,14 +55,67 @@ namespace CrapsGame
                 NotifyPropertyChanged();
             }
         }
-
-        public ObservableCollection<Player> Players
+        public BindingList<Player> Players
         {
             get { return _players; }
-            set { if (_players == value) return;
+            set
+            {
+                if (_players == value) return;
                 _players = value;
                 NotifyPropertyChanged();
             }
         }
+        internal async void CreateNewUser()
+        {
+            using (var ctx = new GameContext())
+            {
+                ctx.Players.Add(NewPlayer);
+                await ctx.SaveChangesAsync();
+            }
+            Players.Add(NewPlayer);
+            SelectedPlayer = new Player()
+            {
+                Id = NewPlayer.Id,
+                Games = NewPlayer.Games,
+                Name = NewPlayer.Name
+            };
+
+            NewPlayer = new Player();
+        }
+        private void LoadUi()
+        {
+            var people = new List<Player>();
+            var games = new List<Game>();
+
+            using (var ctx = new GameContext())
+            {
+                people = ctx.Players.ToList();
+
+                foreach (var player in people)
+                {
+                    ctx.Entry(player).Collection(p => p.Games).Load();
+                    Players.Add(player);
+                }
+
+            }
+        }
+
+        public  async void SaveGame(Game currentGame)
+        {
+            using (var ctx = new GameContext())
+            {
+               
+                ctx.Games.Add(currentGame);
+                await ctx.SaveChangesAsync();
+            }
+        }
+
+        internal void SetSelectedGame(object value)
+        {
+            var Game = (value as Game);
+            CurrentGame = Game;
+
+        }
+
     }
 }
