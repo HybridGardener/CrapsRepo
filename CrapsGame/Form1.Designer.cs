@@ -45,12 +45,16 @@
             this.lblPointVal = new System.Windows.Forms.Label();
             this.lblDie1 = new System.Windows.Forms.Label();
             this.lblDie2 = new System.Windows.Forms.Label();
+            this.PlayerContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.DeletePlayerMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.EditPlayerProfileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.flowLayoutPanel1.SuspendLayout();
             this.PlayerPanel.SuspendLayout();
             this.pnlCreateUser.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GamesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PlayerListBindingSource)).BeginInit();
             this.CrapsBoard.SuspendLayout();
+            this.PlayerContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // flowLayoutPanel1
@@ -77,6 +81,7 @@
             // 
             // PlayerListBox
             // 
+            this.PlayerListBox.ContextMenuStrip = this.PlayerContextMenu;
             this.PlayerListBox.FormattingEnabled = true;
             this.PlayerListBox.Location = new System.Drawing.Point(3, 9);
             this.PlayerListBox.Name = "PlayerListBox";
@@ -130,6 +135,7 @@
             // 
             // CrapsBoard
             // 
+            this.CrapsBoard.BackColor = System.Drawing.Color.Green;
             this.CrapsBoard.Controls.Add(this.lblDie2);
             this.CrapsBoard.Controls.Add(this.lblDie1);
             this.CrapsBoard.Controls.Add(this.lblPointVal);
@@ -137,7 +143,7 @@
             this.CrapsBoard.Controls.Add(this.btnRollEm);
             this.CrapsBoard.Location = new System.Drawing.Point(212, 3);
             this.CrapsBoard.Name = "CrapsBoard";
-            this.CrapsBoard.Size = new System.Drawing.Size(200, 458);
+            this.CrapsBoard.Size = new System.Drawing.Size(576, 458);
             this.CrapsBoard.TabIndex = 2;
             // 
             // btnRollEm
@@ -153,38 +159,63 @@
             // lblPoint
             // 
             this.lblPoint.AutoSize = true;
-            this.lblPoint.Location = new System.Drawing.Point(4, 4);
+            this.lblPoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPoint.Location = new System.Drawing.Point(6, 15);
             this.lblPoint.Name = "lblPoint";
-            this.lblPoint.Size = new System.Drawing.Size(31, 13);
+            this.lblPoint.Size = new System.Drawing.Size(74, 29);
             this.lblPoint.TabIndex = 1;
-            this.lblPoint.Text = "Point";
+            this.lblPoint.Text = "Point:";
             // 
             // lblPointVal
             // 
             this.lblPointVal.AutoSize = true;
-            this.lblPointVal.Location = new System.Drawing.Point(41, 4);
+            this.lblPointVal.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPointVal.Location = new System.Drawing.Point(80, 15);
             this.lblPointVal.Name = "lblPointVal";
-            this.lblPointVal.Size = new System.Drawing.Size(13, 13);
+            this.lblPointVal.Size = new System.Drawing.Size(26, 29);
             this.lblPointVal.TabIndex = 2;
             this.lblPointVal.Text = "0";
             // 
             // lblDie1
             // 
             this.lblDie1.AutoSize = true;
-            this.lblDie1.Location = new System.Drawing.Point(56, 143);
+            this.lblDie1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDie1.Location = new System.Drawing.Point(58, 337);
             this.lblDie1.Name = "lblDie1";
-            this.lblDie1.Size = new System.Drawing.Size(36, 13);
+            this.lblDie1.Size = new System.Drawing.Size(76, 29);
             this.lblDie1.TabIndex = 3;
             this.lblDie1.Text = "Die#1";
             // 
             // lblDie2
             // 
             this.lblDie2.AutoSize = true;
-            this.lblDie2.Location = new System.Drawing.Point(121, 143);
+            this.lblDie2.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDie2.Location = new System.Drawing.Point(183, 337);
             this.lblDie2.Name = "lblDie2";
-            this.lblDie2.Size = new System.Drawing.Size(36, 13);
+            this.lblDie2.Size = new System.Drawing.Size(76, 29);
             this.lblDie2.TabIndex = 4;
             this.lblDie2.Text = "Die#2";
+            // 
+            // PlayerContextMenu
+            // 
+            this.PlayerContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.DeletePlayerMenuItem,
+            this.EditPlayerProfileMenuItem});
+            this.PlayerContextMenu.Name = "PlayerContextMenu";
+            this.PlayerContextMenu.Size = new System.Drawing.Size(167, 48);
+            // 
+            // DeletePlayerMenuItem
+            // 
+            this.DeletePlayerMenuItem.Name = "DeletePlayerMenuItem";
+            this.DeletePlayerMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.DeletePlayerMenuItem.Text = "Delete Player";
+            this.DeletePlayerMenuItem.Click += new System.EventHandler(this.DeletePlayerMenuItem_Click);
+            // 
+            // EditPlayerProfileMenuItem
+            // 
+            this.EditPlayerProfileMenuItem.Name = "EditPlayerProfileMenuItem";
+            this.EditPlayerProfileMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.EditPlayerProfileMenuItem.Text = "Edit Player Profile";
             // 
             // Form1
             // 
@@ -203,6 +234,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.PlayerListBindingSource)).EndInit();
             this.CrapsBoard.ResumeLayout(false);
             this.CrapsBoard.PerformLayout();
+            this.PlayerContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -225,6 +257,9 @@
         private System.Windows.Forms.Label lblDie1;
         private System.Windows.Forms.Label lblPointVal;
         private System.Windows.Forms.Label lblPoint;
+        private System.Windows.Forms.ContextMenuStrip PlayerContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem DeletePlayerMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem EditPlayerProfileMenuItem;
     }
 }
 

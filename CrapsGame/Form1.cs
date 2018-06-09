@@ -18,7 +18,6 @@ namespace CrapsGame
             InitializeComponent();
             mainController = new MainController();
             InitializeDataBindings();
-            
 
         }
 
@@ -72,11 +71,20 @@ namespace CrapsGame
 
         private void RebindPlayers()
         {
+            var playerId = mainController.SelectedPlayer?.Id;
             PlayerListBindingSource.Clear();
+            ReloadPlayers();
+            mainController.SelectedPlayer = mainController.Players.FirstOrDefault(p=>p.Id == playerId);
             PlayerListBox.DataSource = mainController.Players;
             PlayerListBox.DisplayMember = "Name";
-
+          
         }
+
+        private void ReloadPlayers()
+        {
+            mainController.LoadPlayers();
+        }
+
         private void RebindGames()
         {
 
@@ -88,6 +96,9 @@ namespace CrapsGame
         private void btnAddUser_Click(object sender, EventArgs e)
         {
             mainController.CreateNewUser();
+            txtNewUserName.Text = string.Empty;
+            txtNewUserName.DataBindings.Clear();
+            txtNewUserName.DataBindings.Add("Text", mainController.NewPlayer, "Name", false, DataSourceUpdateMode.OnPropertyChanged, string.Empty);
             RebindPlayers();
             Application.DoEvents();
         }
@@ -96,6 +107,14 @@ namespace CrapsGame
         {
             mainController.CurrentGame.Shoot();
             mainController.SaveGame(mainController.CurrentGame);
+            RebindDice();
+        }
+
+        private void DeletePlayerMenuItem_Click(object sender, EventArgs e)
+        {
+            mainController.DeletePlayer();
+            RebindPlayers();
+            Application.DoEvents();
         }
     }
 }

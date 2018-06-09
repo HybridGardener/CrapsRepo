@@ -22,7 +22,7 @@ namespace CrapsGame
             this.CurrentGame = new Game();
             this.NewPlayer = new Player();
             Players = new BindingList<Player>();
-            LoadUi();
+            LoadPlayers();
             SelectedPlayer = Players.FirstOrDefault();
         }
         public Player NewPlayer
@@ -82,11 +82,37 @@ namespace CrapsGame
 
             NewPlayer = new Player();
         }
-        private void LoadUi()
-        {
-            var people = new List<Player>();
-            var games = new List<Game>();
+       
 
+        public  async void SaveGame(Game currentGame)
+        {
+            using (var ctx = new GameContext())
+            {
+                ctx.Games.Add(currentGame);
+                await ctx.SaveChangesAsync();
+            }
+            LoadPlayers();
+        }
+        internal void LoadPlayers()
+        {
+            Players = new BindingList<Player>();
+            var people = new List<Player>();
+            using (var ctx = new GameContext())
+            {
+                people = ctx.Players.ToList();
+
+                foreach (var player in people)
+                {
+                    ctx.Entry(player).Collection(p => p.Games).Load();
+                    Players.Add(player);
+                }
+
+            }
+        }
+        internal void LoadPlayer(int id)
+        {
+            Players = new BindingList<Player>();
+            var people = new List<Player>();
             using (var ctx = new GameContext())
             {
                 people = ctx.Players.ToList();
@@ -100,16 +126,6 @@ namespace CrapsGame
             }
         }
 
-        public  async void SaveGame(Game currentGame)
-        {
-            using (var ctx = new GameContext())
-            {
-               
-                ctx.Games.Add(currentGame);
-                await ctx.SaveChangesAsync();
-            }
-        }
-
         internal void SetSelectedGame(object value)
         {
             var Game = (value as Game);
@@ -117,5 +133,17 @@ namespace CrapsGame
 
         }
 
+        internal async void DeletePlayer()
+        {
+           // Players.Remove(player);
+            using (var ctx = new GameContext())
+            {
+                var x = ctx.Players.ToList().FirstOrDefault(p => p.Id == SelectedPlayer.Id);
+                if (x == null) return;
+                ctx.Players.Remove(x);
+                Players.Remove(x);
+                await ctx.SaveChangesAsync();
+            }
+        }
     }
 }

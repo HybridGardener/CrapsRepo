@@ -16,7 +16,7 @@ namespace GameModels
         private bool _firstToss;
         private int _point;
         private DiceRoll _rollInProgress;
-    
+
 
 
         public Game()
@@ -47,9 +47,18 @@ namespace GameModels
             }
 
         }
-       
 
 
+        public virtual BindingList<DiceRoll> RollsInGame
+        {
+            get { return _rollsInGame; }
+            set
+            {
+                if (_rollsInGame == value) return;
+                _rollsInGame = value;
+                NotifyPropertyChanged();
+            }
+        }
 
         [NotMapped]
         public DiceRoll RollInProgress
@@ -94,7 +103,7 @@ namespace GameModels
                     RollInProgress.GameState = GameStateEnum.Craps;
 
                 }
-                else if (sum == 4 || sum == 5 || sum == 6 || sum == 7 || sum == 9 || sum == 10)
+                else if (sum == 4 || sum == 5 || sum == 6 || sum == 8 || sum == 9 || sum == 10)
                 {
                     Point = sum;
                     RollInProgress.GameState = GameStateEnum.SetPoint;
@@ -116,7 +125,7 @@ namespace GameModels
                 {
                     RollInProgress.GameState = GameStateEnum.Craps;
                 }
-                else if (sum == 4 || sum == 5 || sum == 6 || sum == 7 || sum == 9 || sum == 10)
+                else if (sum == 4 || sum == 5 || sum == 6 || sum == 8 || sum == 9 || sum == 10)
                 {
                     Point = sum;
                     RollInProgress.GameState = GameStateEnum.SetPoint;
@@ -126,15 +135,6 @@ namespace GameModels
             RollsInGame.Add(RollInProgress);
 
         }
-        public virtual BindingList<DiceRoll> RollsInGame
-        {
-            get { return _rollsInGame; }
-            set
-            {
-                if (_rollsInGame == value) return;
-                _rollsInGame = value;
-                NotifyPropertyChanged();
-            }
-        }
+
     }
 }

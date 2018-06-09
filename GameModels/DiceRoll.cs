@@ -9,7 +9,7 @@ namespace GameModels
         private int _dieTwo;
         private GameStateEnum _gameState;
         private int? _gameId;
-        private Game game;
+        private Game _game;
 
         public int Id
         {
@@ -25,7 +25,6 @@ namespace GameModels
 
             }
         }
-
         public int DieOne
         {
             get {return _dieOne; }
@@ -36,7 +35,6 @@ namespace GameModels
             }
             
         }
-
         public int DieTwo
         {
             get { return _dieTwo; }
@@ -48,7 +46,6 @@ namespace GameModels
             }
 
         }
-
         public GameStateEnum GameState
         {
             get { return _gameState; }
@@ -60,20 +57,17 @@ namespace GameModels
             }
 
         }
-      
 
-        public int? GameId
+        public virtual Game Game
         {
-            get => _gameId;
+            get => _game;
             set
             {
-                if (_gameId == value) return;
-                _gameId = value;
+                if (_game == value) return;
+                _game = value;
                 NotifyPropertyChanged();
             }
         }
-
-       
 
         public int Sum()
         {
