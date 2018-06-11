@@ -1,4 +1,5 @@
-﻿using GameModels;
+﻿using CrapsGame;
+using GameModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,12 +10,16 @@ using System.Text;
 
 namespace GameModels
 {
-    public class Player : INPC
+    public class Player :INPC
     {
+        public Player()
+        {
+            Games = new ObservableListSource<Game>();
+        }
+
         private int _id;
         private string _name;
-        private BindingList<Game> _games;
-        [Key]
+        private ObservableListSource<Game> _games;
         public int Id
         {
             get { return _id; }
@@ -38,7 +43,7 @@ namespace GameModels
         }
 
        
-        public virtual BindingList<Game> Games
+        public ObservableListSource<Game> Games
         {
             get => _games;
             set

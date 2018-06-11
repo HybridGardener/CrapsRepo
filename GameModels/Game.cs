@@ -1,7 +1,9 @@
-﻿using System;
+﻿using CrapsGame;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
@@ -9,23 +11,25 @@ namespace GameModels
 {
     public class Game : INPC
     {
-        public static readonly Random numberGenerator = new Random();
 
         private int _id;
-        private BindingList<DiceRoll> _rollsInGame;
+
         private bool _firstToss;
         private int _point;
         private DiceRoll _rollInProgress;
-
+        private Player _player;
+        private int _playerId;
+        private ObservableListSource<DiceRoll> _diceRolls;
 
 
         public Game()
         {
-            RollsInGame = new BindingList<DiceRoll>();
+            DiceRolls = new ObservableListSource<DiceRoll>();
             RollInProgress = new DiceRoll();
-
+            FirstToss = true;
+           
         }
-
+      
         public int Id
         {
             get { return _id; }
@@ -47,31 +51,6 @@ namespace GameModels
             }
 
         }
-
-
-        public virtual BindingList<DiceRoll> RollsInGame
-        {
-            get { return _rollsInGame; }
-            set
-            {
-                if (_rollsInGame == value) return;
-                _rollsInGame = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        [NotMapped]
-        public DiceRoll RollInProgress
-        {
-            get => _rollInProgress;
-            set
-            {
-                if (_rollInProgress == value) return;
-                _rollInProgress = value;
-                NotifyPropertyChanged();
-            }
-        }
-
         public bool FirstToss
         {
             get
@@ -85,56 +64,50 @@ namespace GameModels
             }
 
         }
-        public void Shoot()
+       
+        public Player Player
         {
-            RollInProgress = new DiceRoll();
-            RollInProgress.DieOne = numberGenerator.Next(1, 6);
-            RollInProgress.DieTwo = numberGenerator.Next(1, 6);
-            var sum = RollInProgress.Sum();
-            if (FirstToss)
+            get => _player;
+            set
             {
-                if (sum == 7 || sum == 11)
-                {
-                    RollInProgress.GameState = GameStateEnum.Winner;
-
-                }
-                else if (sum == 2 || sum == 3 || sum == 12)
-                {
-                    RollInProgress.GameState = GameStateEnum.Craps;
-
-                }
-                else if (sum == 4 || sum == 5 || sum == 6 || sum == 8 || sum == 9 || sum == 10)
-                {
-                    Point = sum;
-                    RollInProgress.GameState = GameStateEnum.SetPoint;
-
-                }
+                if (_player == value) return;
+                _player = value;
+                NotifyPropertyChanged();
             }
-            else
-            {
-                if (sum == Point)
-                {
-                    RollInProgress.GameState = GameStateEnum.Winner;
-                }
-                else if (sum == 2 || sum == 3 || sum == 12)
-                {
-                    RollInProgress.GameState = GameStateEnum.Craps;
-
-                }
-                if (sum == 7 || sum == 12)
-                {
-                    RollInProgress.GameState = GameStateEnum.Craps;
-                }
-                else if (sum == 4 || sum == 5 || sum == 6 || sum == 8 || sum == 9 || sum == 10)
-                {
-                    Point = sum;
-                    RollInProgress.GameState = GameStateEnum.SetPoint;
-
-                }
-            }
-            RollsInGame.Add(RollInProgress);
-
         }
+        public int PlayerId
+        {
+            get => _playerId;
+            set
+            {
+                if (_playerId == value) return;
+                _playerId = value;
+                NotifyPropertyChanged();
+            }
+        }
+        [NotMapped]
+        public DiceRoll RollInProgress
+        {
+            get => _rollInProgress;
+            set
+            {
+                if (_rollInProgress == value) return;
+                _rollInProgress = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+          public ObservableListSource<DiceRoll> DiceRolls
+        {
+            get { return _diceRolls; }
+            set
+            {
+                if (_diceRolls == value) return;
+                _diceRolls = value;
+                NotifyPropertyChanged();
+            }
+        }
+      
 
     }
 }

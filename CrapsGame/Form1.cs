@@ -20,6 +20,7 @@ namespace CrapsGame
             InitializeDataBindings();
 
         }
+       
 
         private void InitializeDataBindings()
         {
@@ -35,8 +36,9 @@ namespace CrapsGame
 
             lblDie1.DataBindings.Add("Text", mainController.CurrentGame.RollInProgress, "DieOne", false, DataSourceUpdateMode.OnPropertyChanged, 0);
             lblDie2.DataBindings.Add("Text", mainController.CurrentGame.RollInProgress, "DieTwo", false, DataSourceUpdateMode.OnPropertyChanged, 0);
+            lblGameState.DataBindings.Add("Text", mainController, "GameState", false, DataSourceUpdateMode.OnPropertyChanged);
 
-
+            lblPlayerVal.DataBindings.Add("Text", mainController.SelectedPlayer, "Name", false, DataSourceUpdateMode.OnPropertyChanged, string.Empty);
         }
 
         private void CmbGames_SelectedValueChanged(object sender, EventArgs e)
@@ -73,18 +75,24 @@ namespace CrapsGame
         {
             var playerId = mainController.SelectedPlayer?.Id;
             PlayerListBindingSource.Clear();
-            ReloadPlayers();
+            mainController.LoadPlayers_Dev();
+            PlayerListBindingSource.DataSource = mainController.Players;
             mainController.SelectedPlayer = mainController.Players.FirstOrDefault(p=>p.Id == playerId);
             PlayerListBox.DataSource = mainController.Players;
             PlayerListBox.DisplayMember = "Name";
           
         }
-
-        private void ReloadPlayers()
+        private void UpdateGameState()
         {
-            mainController.LoadPlayers();
+            lblGameState.DataBindings.Clear();
+            lblGameState.DataBindings.Add("Text", mainController, "GameState", false, DataSourceUpdateMode.OnPropertyChanged);
         }
 
+        private void UpdatePlayerBinding()
+        {
+            lblPlayerVal.DataBindings.Clear();
+            lblPlayerVal.DataBindings.Add("Text", mainController.SelectedPlayer, "Name", false, DataSourceUpdateMode.OnPropertyChanged, string.Empty);
+        }
         private void RebindGames()
         {
 
@@ -92,22 +100,28 @@ namespace CrapsGame
             cmbGames.DataSource = mainController.SelectedPlayer?.Games;
             cmbGames.DisplayMember = "Id";
         }
+        private void RebindNewUserText()
+        {
+            txtNewUserName.DataBindings.Clear();
+            txtNewUserName.Text = string.Empty;
+            txtNewUserName.DataBindings.Add("Text", mainController.NewPlayer, "Name", false, DataSourceUpdateMode.OnPropertyChanged, string.Empty);
 
+        }
         private void btnAddUser_Click(object sender, EventArgs e)
         {
             mainController.CreateNewUser();
-            txtNewUserName.Text = string.Empty;
-            txtNewUserName.DataBindings.Clear();
-            txtNewUserName.DataBindings.Add("Text", mainController.NewPlayer, "Name", false, DataSourceUpdateMode.OnPropertyChanged, string.Empty);
-            RebindPlayers();
+            RebindNewUserText();
+            //mainController.SelectedPlayer = mainController.Players.LastOrDefault();
             Application.DoEvents();
         }
 
         private void btnRollEm_Click(object sender, EventArgs e)
         {
-            mainController.CurrentGame.Shoot();
-            mainController.SaveGame(mainController.CurrentGame);
+            mainController.Shoot();
             RebindDice();
+            UpdateGameState();
+
+
         }
 
         private void DeletePlayerMenuItem_Click(object sender, EventArgs e)
@@ -115,6 +129,15 @@ namespace CrapsGame
             mainController.DeletePlayer();
             RebindPlayers();
             Application.DoEvents();
+        }
+
+        private void PlayerListBox_SelectedValueChanged(object sender, EventArgs e)
+        {
+            var val = (sender as ListBox);
+            if (val == null) return;
+            var player = val.SelectedItem;
+            if (player == null) return;
+            mainController.SetSelectedPlayer(player);
         }
     }
 }

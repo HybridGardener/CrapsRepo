@@ -48,6 +48,9 @@
             this.PlayerContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.DeletePlayerMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EditPlayerProfileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblGameState = new System.Windows.Forms.Label();
+            this.lblPlayer = new System.Windows.Forms.Label();
+            this.lblPlayerVal = new System.Windows.Forms.Label();
             this.flowLayoutPanel1.SuspendLayout();
             this.PlayerPanel.SuspendLayout();
             this.pnlCreateUser.SuspendLayout();
@@ -87,6 +90,7 @@
             this.PlayerListBox.Name = "PlayerListBox";
             this.PlayerListBox.Size = new System.Drawing.Size(191, 147);
             this.PlayerListBox.TabIndex = 0;
+            this.PlayerListBox.SelectedValueChanged += new System.EventHandler(this.PlayerListBox_SelectedValueChanged);
             // 
             // pnlCreateUser
             // 
@@ -136,6 +140,9 @@
             // CrapsBoard
             // 
             this.CrapsBoard.BackColor = System.Drawing.Color.Green;
+            this.CrapsBoard.Controls.Add(this.lblPlayerVal);
+            this.CrapsBoard.Controls.Add(this.lblPlayer);
+            this.CrapsBoard.Controls.Add(this.lblGameState);
             this.CrapsBoard.Controls.Add(this.lblDie2);
             this.CrapsBoard.Controls.Add(this.lblDie1);
             this.CrapsBoard.Controls.Add(this.lblPointVal);
@@ -207,15 +214,45 @@
             // DeletePlayerMenuItem
             // 
             this.DeletePlayerMenuItem.Name = "DeletePlayerMenuItem";
-            this.DeletePlayerMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.DeletePlayerMenuItem.Size = new System.Drawing.Size(166, 22);
             this.DeletePlayerMenuItem.Text = "Delete Player";
             this.DeletePlayerMenuItem.Click += new System.EventHandler(this.DeletePlayerMenuItem_Click);
             // 
             // EditPlayerProfileMenuItem
             // 
             this.EditPlayerProfileMenuItem.Name = "EditPlayerProfileMenuItem";
-            this.EditPlayerProfileMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.EditPlayerProfileMenuItem.Size = new System.Drawing.Size(166, 22);
             this.EditPlayerProfileMenuItem.Text = "Edit Player Profile";
+            // 
+            // lblGameState
+            // 
+            this.lblGameState.AutoSize = true;
+            this.lblGameState.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGameState.Location = new System.Drawing.Point(366, 15);
+            this.lblGameState.Name = "lblGameState";
+            this.lblGameState.Size = new System.Drawing.Size(139, 29);
+            this.lblGameState.TabIndex = 5;
+            this.lblGameState.Text = "Game State";
+            // 
+            // lblPlayer
+            // 
+            this.lblPlayer.AutoSize = true;
+            this.lblPlayer.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPlayer.Location = new System.Drawing.Point(302, 422);
+            this.lblPlayer.Name = "lblPlayer";
+            this.lblPlayer.Size = new System.Drawing.Size(87, 29);
+            this.lblPlayer.TabIndex = 6;
+            this.lblPlayer.Text = "Player:";
+            // 
+            // lblPlayerVal
+            // 
+            this.lblPlayerVal.AutoSize = true;
+            this.lblPlayerVal.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPlayerVal.Location = new System.Drawing.Point(381, 422);
+            this.lblPlayerVal.Name = "lblPlayerVal";
+            this.lblPlayerVal.Size = new System.Drawing.Size(168, 29);
+            this.lblPlayerVal.TabIndex = 7;
+            this.lblPlayerVal.Text = "Player\'s Name";
             // 
             // Form1
             // 
@@ -260,6 +297,9 @@
         private System.Windows.Forms.ContextMenuStrip PlayerContextMenu;
         private System.Windows.Forms.ToolStripMenuItem DeletePlayerMenuItem;
         private System.Windows.Forms.ToolStripMenuItem EditPlayerProfileMenuItem;
+        private System.Windows.Forms.Label lblGameState;
+        private System.Windows.Forms.Label lblPlayerVal;
+        private System.Windows.Forms.Label lblPlayer;
     }
 }
 

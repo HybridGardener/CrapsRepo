@@ -8,8 +8,14 @@ namespace GameModels
         private int _dieOne;
         private int _dieTwo;
         private GameStateEnum _gameState;
-        private int? _gameId;
         private Game _game;
+        private int _gameId;
+
+
+        public DiceRoll()
+        {
+
+        }
 
         public int Id
         {
@@ -23,17 +29,19 @@ namespace GameModels
                 _id = value;
                 NotifyPropertyChanged();
 
+
             }
         }
         public int DieOne
         {
-            get {return _dieOne; }
-            set {
+            get { return _dieOne; }
+            set
+            {
                 if (_dieOne == value) return;
                 _dieOne = value;
                 NotifyPropertyChanged();
             }
-            
+
         }
         public int DieTwo
         {
@@ -55,12 +63,22 @@ namespace GameModels
                 _gameState = value;
                 NotifyPropertyChanged();
             }
-
         }
 
-        public virtual Game Game
+
+        public int GameId
         {
-            get => _game;
+            get => _gameId;
+            set
+            {
+                if (_gameId == value) return;
+                _gameId = value;
+                NotifyPropertyChanged();
+            }
+        }
+        public Game Game
+        {
+            get { return _game; }
             set
             {
                 if (_game == value) return;
@@ -68,7 +86,6 @@ namespace GameModels
                 NotifyPropertyChanged();
             }
         }
-
         public int Sum()
         {
 
