@@ -46,37 +46,13 @@ namespace CrapsGame
             using (var ctx = new GameContext())
             {
                 var players = ctx.Players.ToList();
-                //var players = from p in ctx.Players
-                //              orderby p.Name
-                //              select p;
                 if (!players.Any()) return;
                 var pBL = new ObservableListSource<Player>();
 
                 foreach (Player player in players)
                 {
 
-                    //var games = from g in ctx.Games
-                    //            where g.Player == player
-                    //            orderby g.Player
-                    //            select g;
                     var gBL = new ObservableListSource<Game>();
-
-                    //foreach (var x in games)
-                    //{
-                    //    var drBL = new ObservableListSource<DiceRoll>();
-                    //    var rolls = from dr in ctx.DiceRolls
-                    //                where dr.Game == x
-                    //                select dr;
-
-                    //    foreach (var roll in rolls)
-                    //    {
-                    //        drBL.Add(roll);
-                    //    }
-
-                    //    x.DiceRolls = drBL;
-                    //    gBL.Add(x);
-                    //}
-                    //player.Games = gBL;
                     pBL.Add(player);
                     Players = pBL;
 
@@ -84,7 +60,6 @@ namespace CrapsGame
             }
 
         }
-
         public string GameState
         {
             get => _gameState;
@@ -95,7 +70,6 @@ namespace CrapsGame
                 NotifyPropertyChanged();
             }
         }
-
         public Player NewPlayer
         {
             get { return _newPlayer; }
@@ -141,17 +115,27 @@ namespace CrapsGame
 
         internal void CreateNewUser()
         {
-            if (NewPlayer.Id == 0)
+            using (var ctx = new GameContext())
             {
-                using (var ctx = new GameContext())
+                if (NewPlayer.Id == 0)
                 {
+
                     ctx.Players.Add(NewPlayer);
                     ctx.SaveChanges();
+                    Players.Add(NewPlayer);
                 }
-                Players.Add(NewPlayer);
-                NewPlayer = new Player();
-            }
+                else
+                {
+                    var player = ctx.Players.FirstOrDefault(p => p.Id == NewPlayer.Id);
+                    if (player == null) return;
+                    player.Name = NewPlayer.Name;
+                    ctx.SaveChanges();
 
+                }
+
+                NewPlayer = new Player();
+
+            }
         }
         internal void SavePlayer()
         {
@@ -193,24 +177,6 @@ namespace CrapsGame
             }
 
         }
-
-
-        internal void LoadPlayers()
-        {
-            Players = new ObservableListSource<Player>();
-            var people = new List<Player>();
-            using (var ctx = new GameContext())
-            {
-
-                people = ctx.Players.Include("Games").ToList();
-
-                foreach (var player in people)
-                {
-                    Players.Add(player);
-                }
-
-            }
-        }
         internal void SetSelectedGame(object value)
         {
             var Game = (value as Game);
@@ -227,33 +193,61 @@ namespace CrapsGame
             {
                 var x = ctx.Players.ToList().FirstOrDefault(p => p.Id == SelectedPlayer.Id);
                 if (x == null) return;
-                foreach (var g in x.Games)
+                foreach (var g in x.Games.ToList())
                 {
-                    //foreach (var dr in g.RollsInGame)
-                    //{
-                    //    ctx.DiceRolls.ToList().RemoveAll(r => r.Game.Id == g.Id);
-                    //}
-                    ctx.Games.ToList().RemoveAll(i => i.Player.Id == SelectedPlayer.Id);
+                    foreach (var dr in g.DiceRolls.ToList())
+                    {
+                        ctx.DiceRolls.Remove(dr);
+                    }
+                    ctx.Games.Remove(g);
                 }
                 ctx.Players.Remove(x);
                 Players.Remove(x);
                 ctx.SaveChanges();
                 SelectedPlayer = Players.FirstOrDefault();
+            }
 
+        }
+
+        internal void ClearPlayerGames()
+        {
+            using (var ctx = new GameContext())
+            {
+                var x = ctx.Players.ToList().FirstOrDefault(p => p.Id == SelectedPlayer.Id);
+                ctx.Entry(x).Collection(p => p.Games).Load();
+
+                if (x == null) return;
+                foreach (var g in x.Games.ToList())
+                {
+                    ctx.Entry(g).Collection(p => p.DiceRolls).Load();
+                    ctx.Games.Remove(g);
+                }
+                ctx.SaveChanges();
+            }
+        }
+
+        internal void EditPlayer()
+        {
+
+            using (var ctx = new GameContext())
+            {
+                var x = ctx.Players.ToList().FirstOrDefault(p => p.Id == SelectedPlayer.Id);
+                if (x == null) return;
+                NewPlayer = x;
 
             }
         }
+
+
         internal void SetSelectedPlayer(object obj)
         {
             var player = (obj as Player);
             if (player == null) return;
             if (SelectedPlayer != null && SelectedPlayer.Id == player.Id) return;
             SelectedPlayer = player;
-
             SetSelectedGame(new Game() { Player = player });
-            
         }
-        public void Shoot()
+        internal void Shoot()
         {
             var rollInProgress = new DiceRoll() { Game = CurrentGame };
             rollInProgress.DieOne = numberGenerator.Next(1, 6);

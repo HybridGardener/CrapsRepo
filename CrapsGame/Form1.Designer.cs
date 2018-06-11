@@ -31,33 +31,34 @@
             this.components = new System.ComponentModel.Container();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.PlayerPanel = new System.Windows.Forms.Panel();
-            this.PlayerListBox = new System.Windows.Forms.ListBox();
-            this.pnlCreateUser = new System.Windows.Forms.Panel();
-            this.txtNewUserName = new System.Windows.Forms.TextBox();
-            this.btnAddUser = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.cmbGames = new System.Windows.Forms.ComboBox();
-            this.GamesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.PlayerListBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.CrapsBoard = new System.Windows.Forms.Panel();
-            this.btnRollEm = new System.Windows.Forms.Button();
-            this.lblPoint = new System.Windows.Forms.Label();
-            this.lblPointVal = new System.Windows.Forms.Label();
-            this.lblDie1 = new System.Windows.Forms.Label();
-            this.lblDie2 = new System.Windows.Forms.Label();
+            this.PlayerListBox = new System.Windows.Forms.ListBox();
             this.PlayerContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.DeletePlayerMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EditPlayerProfileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lblGameState = new System.Windows.Forms.Label();
-            this.lblPlayer = new System.Windows.Forms.Label();
+            this.pnlCreateUser = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnAddUser = new System.Windows.Forms.Button();
+            this.txtNewUserName = new System.Windows.Forms.TextBox();
+            this.CrapsBoard = new System.Windows.Forms.Panel();
             this.lblPlayerVal = new System.Windows.Forms.Label();
+            this.lblPlayer = new System.Windows.Forms.Label();
+            this.lblGameState = new System.Windows.Forms.Label();
+            this.lblDie2 = new System.Windows.Forms.Label();
+            this.lblDie1 = new System.Windows.Forms.Label();
+            this.lblPointVal = new System.Windows.Forms.Label();
+            this.lblPoint = new System.Windows.Forms.Label();
+            this.btnRollEm = new System.Windows.Forms.Button();
+            this.GamesBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.PlayerListBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.clearPlayersGamesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.flowLayoutPanel1.SuspendLayout();
             this.PlayerPanel.SuspendLayout();
+            this.PlayerContextMenu.SuspendLayout();
             this.pnlCreateUser.SuspendLayout();
+            this.CrapsBoard.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GamesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PlayerListBindingSource)).BeginInit();
-            this.CrapsBoard.SuspendLayout();
-            this.PlayerContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // flowLayoutPanel1
@@ -82,6 +83,14 @@
             this.PlayerPanel.Size = new System.Drawing.Size(203, 458);
             this.PlayerPanel.TabIndex = 1;
             // 
+            // cmbGames
+            // 
+            this.cmbGames.FormattingEnabled = true;
+            this.cmbGames.Location = new System.Drawing.Point(4, 163);
+            this.cmbGames.Name = "cmbGames";
+            this.cmbGames.Size = new System.Drawing.Size(190, 21);
+            this.cmbGames.TabIndex = 3;
+            // 
             // PlayerListBox
             // 
             this.PlayerListBox.ContextMenuStrip = this.PlayerContextMenu;
@@ -91,6 +100,29 @@
             this.PlayerListBox.Size = new System.Drawing.Size(191, 147);
             this.PlayerListBox.TabIndex = 0;
             this.PlayerListBox.SelectedValueChanged += new System.EventHandler(this.PlayerListBox_SelectedValueChanged);
+            // 
+            // PlayerContextMenu
+            // 
+            this.PlayerContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.DeletePlayerMenuItem,
+            this.EditPlayerProfileMenuItem,
+            this.clearPlayersGamesToolStripMenuItem});
+            this.PlayerContextMenu.Name = "PlayerContextMenu";
+            this.PlayerContextMenu.Size = new System.Drawing.Size(184, 92);
+            // 
+            // DeletePlayerMenuItem
+            // 
+            this.DeletePlayerMenuItem.Name = "DeletePlayerMenuItem";
+            this.DeletePlayerMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.DeletePlayerMenuItem.Text = "Delete Player";
+            this.DeletePlayerMenuItem.Click += new System.EventHandler(this.DeletePlayerMenuItem_Click);
+            // 
+            // EditPlayerProfileMenuItem
+            // 
+            this.EditPlayerProfileMenuItem.Name = "EditPlayerProfileMenuItem";
+            this.EditPlayerProfileMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.EditPlayerProfileMenuItem.Text = "Edit Player Profile";
+            this.EditPlayerProfileMenuItem.Click += new System.EventHandler(this.EditPlayerProfileMenuItem_Click);
             // 
             // pnlCreateUser
             // 
@@ -102,13 +134,14 @@
             this.pnlCreateUser.Size = new System.Drawing.Size(200, 47);
             this.pnlCreateUser.TabIndex = 2;
             // 
-            // txtNewUserName
+            // label1
             // 
-            this.txtNewUserName.Location = new System.Drawing.Point(7, 20);
-            this.txtNewUserName.Name = "txtNewUserName";
-            this.txtNewUserName.Size = new System.Drawing.Size(116, 20);
-            this.txtNewUserName.TabIndex = 0;
-            this.txtNewUserName.TextChanged += new System.EventHandler(this.txtNewUserName_TextChanged);
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(7, 4);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(74, 13);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Player\'s Name";
             // 
             // btnAddUser
             // 
@@ -120,22 +153,13 @@
             this.btnAddUser.UseVisualStyleBackColor = true;
             this.btnAddUser.Click += new System.EventHandler(this.btnAddUser_Click);
             // 
-            // label1
+            // txtNewUserName
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 4);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(74, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Player\'s Name";
-            // 
-            // cmbGames
-            // 
-            this.cmbGames.FormattingEnabled = true;
-            this.cmbGames.Location = new System.Drawing.Point(4, 163);
-            this.cmbGames.Name = "cmbGames";
-            this.cmbGames.Size = new System.Drawing.Size(190, 21);
-            this.cmbGames.TabIndex = 3;
+            this.txtNewUserName.Location = new System.Drawing.Point(7, 20);
+            this.txtNewUserName.Name = "txtNewUserName";
+            this.txtNewUserName.Size = new System.Drawing.Size(116, 20);
+            this.txtNewUserName.TabIndex = 0;
+            this.txtNewUserName.TextChanged += new System.EventHandler(this.txtNewUserName_TextChanged);
             // 
             // CrapsBoard
             // 
@@ -153,86 +177,15 @@
             this.CrapsBoard.Size = new System.Drawing.Size(576, 458);
             this.CrapsBoard.TabIndex = 2;
             // 
-            // btnRollEm
+            // lblPlayerVal
             // 
-            this.btnRollEm.Location = new System.Drawing.Point(59, 428);
-            this.btnRollEm.Name = "btnRollEm";
-            this.btnRollEm.Size = new System.Drawing.Size(75, 23);
-            this.btnRollEm.TabIndex = 0;
-            this.btnRollEm.Text = "Roll\'Em";
-            this.btnRollEm.UseVisualStyleBackColor = true;
-            this.btnRollEm.Click += new System.EventHandler(this.btnRollEm_Click);
-            // 
-            // lblPoint
-            // 
-            this.lblPoint.AutoSize = true;
-            this.lblPoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPoint.Location = new System.Drawing.Point(6, 15);
-            this.lblPoint.Name = "lblPoint";
-            this.lblPoint.Size = new System.Drawing.Size(74, 29);
-            this.lblPoint.TabIndex = 1;
-            this.lblPoint.Text = "Point:";
-            // 
-            // lblPointVal
-            // 
-            this.lblPointVal.AutoSize = true;
-            this.lblPointVal.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPointVal.Location = new System.Drawing.Point(80, 15);
-            this.lblPointVal.Name = "lblPointVal";
-            this.lblPointVal.Size = new System.Drawing.Size(26, 29);
-            this.lblPointVal.TabIndex = 2;
-            this.lblPointVal.Text = "0";
-            // 
-            // lblDie1
-            // 
-            this.lblDie1.AutoSize = true;
-            this.lblDie1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDie1.Location = new System.Drawing.Point(58, 337);
-            this.lblDie1.Name = "lblDie1";
-            this.lblDie1.Size = new System.Drawing.Size(76, 29);
-            this.lblDie1.TabIndex = 3;
-            this.lblDie1.Text = "Die#1";
-            // 
-            // lblDie2
-            // 
-            this.lblDie2.AutoSize = true;
-            this.lblDie2.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDie2.Location = new System.Drawing.Point(183, 337);
-            this.lblDie2.Name = "lblDie2";
-            this.lblDie2.Size = new System.Drawing.Size(76, 29);
-            this.lblDie2.TabIndex = 4;
-            this.lblDie2.Text = "Die#2";
-            // 
-            // PlayerContextMenu
-            // 
-            this.PlayerContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.DeletePlayerMenuItem,
-            this.EditPlayerProfileMenuItem});
-            this.PlayerContextMenu.Name = "PlayerContextMenu";
-            this.PlayerContextMenu.Size = new System.Drawing.Size(167, 48);
-            // 
-            // DeletePlayerMenuItem
-            // 
-            this.DeletePlayerMenuItem.Name = "DeletePlayerMenuItem";
-            this.DeletePlayerMenuItem.Size = new System.Drawing.Size(166, 22);
-            this.DeletePlayerMenuItem.Text = "Delete Player";
-            this.DeletePlayerMenuItem.Click += new System.EventHandler(this.DeletePlayerMenuItem_Click);
-            // 
-            // EditPlayerProfileMenuItem
-            // 
-            this.EditPlayerProfileMenuItem.Name = "EditPlayerProfileMenuItem";
-            this.EditPlayerProfileMenuItem.Size = new System.Drawing.Size(166, 22);
-            this.EditPlayerProfileMenuItem.Text = "Edit Player Profile";
-            // 
-            // lblGameState
-            // 
-            this.lblGameState.AutoSize = true;
-            this.lblGameState.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblGameState.Location = new System.Drawing.Point(366, 15);
-            this.lblGameState.Name = "lblGameState";
-            this.lblGameState.Size = new System.Drawing.Size(139, 29);
-            this.lblGameState.TabIndex = 5;
-            this.lblGameState.Text = "Game State";
+            this.lblPlayerVal.AutoSize = true;
+            this.lblPlayerVal.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPlayerVal.Location = new System.Drawing.Point(381, 422);
+            this.lblPlayerVal.Name = "lblPlayerVal";
+            this.lblPlayerVal.Size = new System.Drawing.Size(168, 29);
+            this.lblPlayerVal.TabIndex = 7;
+            this.lblPlayerVal.Text = "Player\'s Name";
             // 
             // lblPlayer
             // 
@@ -244,15 +197,72 @@
             this.lblPlayer.TabIndex = 6;
             this.lblPlayer.Text = "Player:";
             // 
-            // lblPlayerVal
+            // lblGameState
             // 
-            this.lblPlayerVal.AutoSize = true;
-            this.lblPlayerVal.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPlayerVal.Location = new System.Drawing.Point(381, 422);
-            this.lblPlayerVal.Name = "lblPlayerVal";
-            this.lblPlayerVal.Size = new System.Drawing.Size(168, 29);
-            this.lblPlayerVal.TabIndex = 7;
-            this.lblPlayerVal.Text = "Player\'s Name";
+            this.lblGameState.AutoSize = true;
+            this.lblGameState.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGameState.Location = new System.Drawing.Point(366, 15);
+            this.lblGameState.Name = "lblGameState";
+            this.lblGameState.Size = new System.Drawing.Size(139, 29);
+            this.lblGameState.TabIndex = 5;
+            this.lblGameState.Text = "Game State";
+            // 
+            // lblDie2
+            // 
+            this.lblDie2.AutoSize = true;
+            this.lblDie2.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDie2.Location = new System.Drawing.Point(183, 337);
+            this.lblDie2.Name = "lblDie2";
+            this.lblDie2.Size = new System.Drawing.Size(76, 29);
+            this.lblDie2.TabIndex = 4;
+            this.lblDie2.Text = "Die#2";
+            // 
+            // lblDie1
+            // 
+            this.lblDie1.AutoSize = true;
+            this.lblDie1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDie1.Location = new System.Drawing.Point(58, 337);
+            this.lblDie1.Name = "lblDie1";
+            this.lblDie1.Size = new System.Drawing.Size(76, 29);
+            this.lblDie1.TabIndex = 3;
+            this.lblDie1.Text = "Die#1";
+            // 
+            // lblPointVal
+            // 
+            this.lblPointVal.AutoSize = true;
+            this.lblPointVal.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPointVal.Location = new System.Drawing.Point(80, 15);
+            this.lblPointVal.Name = "lblPointVal";
+            this.lblPointVal.Size = new System.Drawing.Size(26, 29);
+            this.lblPointVal.TabIndex = 2;
+            this.lblPointVal.Text = "0";
+            // 
+            // lblPoint
+            // 
+            this.lblPoint.AutoSize = true;
+            this.lblPoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPoint.Location = new System.Drawing.Point(6, 15);
+            this.lblPoint.Name = "lblPoint";
+            this.lblPoint.Size = new System.Drawing.Size(74, 29);
+            this.lblPoint.TabIndex = 1;
+            this.lblPoint.Text = "Point:";
+            // 
+            // btnRollEm
+            // 
+            this.btnRollEm.Location = new System.Drawing.Point(59, 428);
+            this.btnRollEm.Name = "btnRollEm";
+            this.btnRollEm.Size = new System.Drawing.Size(75, 23);
+            this.btnRollEm.TabIndex = 0;
+            this.btnRollEm.Text = "Roll\'Em";
+            this.btnRollEm.UseVisualStyleBackColor = true;
+            this.btnRollEm.Click += new System.EventHandler(this.btnRollEm_Click);
+            // 
+            // clearPlayersGamesToolStripMenuItem
+            // 
+            this.clearPlayersGamesToolStripMenuItem.Name = "clearPlayersGamesToolStripMenuItem";
+            this.clearPlayersGamesToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.clearPlayersGamesToolStripMenuItem.Text = "Clear Player\'s Games";
+            this.clearPlayersGamesToolStripMenuItem.Click += new System.EventHandler(this.clearPlayersGamesToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -265,13 +275,13 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.PlayerPanel.ResumeLayout(false);
+            this.PlayerContextMenu.ResumeLayout(false);
             this.pnlCreateUser.ResumeLayout(false);
             this.pnlCreateUser.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.GamesBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PlayerListBindingSource)).EndInit();
             this.CrapsBoard.ResumeLayout(false);
             this.CrapsBoard.PerformLayout();
-            this.PlayerContextMenu.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.GamesBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PlayerListBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -300,6 +310,7 @@
         private System.Windows.Forms.Label lblGameState;
         private System.Windows.Forms.Label lblPlayerVal;
         private System.Windows.Forms.Label lblPlayer;
+        private System.Windows.Forms.ToolStripMenuItem clearPlayersGamesToolStripMenuItem;
     }
 }
 
