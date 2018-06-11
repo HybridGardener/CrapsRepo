@@ -316,6 +316,7 @@ namespace CrapsGame
                     {
                         CurrentGame.Player = existingPlayer;
                         ctx.Games.Add(CurrentGame);
+                        ctx.DiceRolls.Add(rollInProgress);
                         ctx.SaveChanges();
                     }
                     else
