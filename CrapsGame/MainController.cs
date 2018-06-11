@@ -251,7 +251,7 @@ namespace CrapsGame
             SelectedPlayer = player;
 
             SetSelectedGame(new Game() { Player = player });
-
+            
         }
         public void Shoot()
         {

@@ -33,12 +33,9 @@ namespace CrapsGame
             cmbGames.DataSource = mainController.SelectedPlayer?.Games;
             cmbGames.DisplayMember = "Id";
             cmbGames.SelectedValueChanged += CmbGames_SelectedValueChanged;
-
-            lblDie1.DataBindings.Add("Text", mainController.CurrentGame.RollInProgress, "DieOne", false, DataSourceUpdateMode.OnPropertyChanged, 0);
-            lblDie2.DataBindings.Add("Text", mainController.CurrentGame.RollInProgress, "DieTwo", false, DataSourceUpdateMode.OnPropertyChanged, 0);
-            lblGameState.DataBindings.Add("Text", mainController, "GameState", false, DataSourceUpdateMode.OnPropertyChanged);
-
-            lblPlayerVal.DataBindings.Add("Text", mainController.SelectedPlayer, "Name", false, DataSourceUpdateMode.OnPropertyChanged, string.Empty);
+            RebindPlayers();
+            RebindGames();
+            RebindDice();
         }
 
         private void CmbGames_SelectedValueChanged(object sender, EventArgs e)
@@ -59,6 +56,13 @@ namespace CrapsGame
             btnAddUser.Enabled = !string.IsNullOrEmpty(tb.Text);
           
         }
+
+        private void RebindCurrentPlayerLable()
+        {
+            lblPlayerVal.DataBindings.Clear();
+            lblPlayerVal.DataBindings.Add("Text", mainController.SelectedPlayer, "Name",false,DataSourceUpdateMode.OnPropertyChanged);
+        }
+
         private void RebindDice()
         {
             lblDie1.DataBindings.Clear();
@@ -120,7 +124,8 @@ namespace CrapsGame
             mainController.Shoot();
             RebindDice();
             UpdateGameState();
-
+            UpdatePlayerBinding();
+            RebindCurrentPlayerLable();
 
         }
 
@@ -128,6 +133,7 @@ namespace CrapsGame
         {
             mainController.DeletePlayer();
             RebindPlayers();
+            RebindCurrentPlayerLable();
             Application.DoEvents();
         }
 
@@ -138,6 +144,10 @@ namespace CrapsGame
             var player = val.SelectedItem;
             if (player == null) return;
             mainController.SetSelectedPlayer(player);
+            RebindDice();
+            RebindCurrentPlayerLable();
+
+
         }
     }
 }
