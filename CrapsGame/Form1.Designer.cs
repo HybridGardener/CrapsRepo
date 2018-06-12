@@ -42,7 +42,6 @@
             this.txtNewUserName = new System.Windows.Forms.TextBox();
             this.CrapsBoard = new System.Windows.Forms.Panel();
             this.lblPlayerVal = new System.Windows.Forms.Label();
-            this.lblPlayer = new System.Windows.Forms.Label();
             this.lblGameState = new System.Windows.Forms.Label();
             this.lblDie2 = new System.Windows.Forms.Label();
             this.lblDie1 = new System.Windows.Forms.Label();
@@ -52,6 +51,12 @@
             this.GamesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.PlayerListBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.clearPlayersGamesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.lblWins = new System.Windows.Forms.Label();
+            this.lblWinsVal = new System.Windows.Forms.Label();
+            this.lblLosses = new System.Windows.Forms.Label();
+            this.lblLossesVal = new System.Windows.Forms.Label();
             this.flowLayoutPanel1.SuspendLayout();
             this.PlayerPanel.SuspendLayout();
             this.PlayerContextMenu.SuspendLayout();
@@ -59,6 +64,8 @@
             this.CrapsBoard.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GamesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PlayerListBindingSource)).BeginInit();
+            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // flowLayoutPanel1
@@ -108,19 +115,19 @@
             this.EditPlayerProfileMenuItem,
             this.clearPlayersGamesToolStripMenuItem});
             this.PlayerContextMenu.Name = "PlayerContextMenu";
-            this.PlayerContextMenu.Size = new System.Drawing.Size(184, 92);
+            this.PlayerContextMenu.Size = new System.Drawing.Size(184, 70);
             // 
             // DeletePlayerMenuItem
             // 
             this.DeletePlayerMenuItem.Name = "DeletePlayerMenuItem";
-            this.DeletePlayerMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.DeletePlayerMenuItem.Size = new System.Drawing.Size(183, 22);
             this.DeletePlayerMenuItem.Text = "Delete Player";
             this.DeletePlayerMenuItem.Click += new System.EventHandler(this.DeletePlayerMenuItem_Click);
             // 
             // EditPlayerProfileMenuItem
             // 
             this.EditPlayerProfileMenuItem.Name = "EditPlayerProfileMenuItem";
-            this.EditPlayerProfileMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.EditPlayerProfileMenuItem.Size = new System.Drawing.Size(183, 22);
             this.EditPlayerProfileMenuItem.Text = "Edit Player Profile";
             this.EditPlayerProfileMenuItem.Click += new System.EventHandler(this.EditPlayerProfileMenuItem_Click);
             // 
@@ -164,11 +171,14 @@
             // CrapsBoard
             // 
             this.CrapsBoard.BackColor = System.Drawing.Color.Green;
+            this.CrapsBoard.Controls.Add(this.lblLossesVal);
+            this.CrapsBoard.Controls.Add(this.lblLosses);
+            this.CrapsBoard.Controls.Add(this.lblWinsVal);
+            this.CrapsBoard.Controls.Add(this.lblWins);
+            this.CrapsBoard.Controls.Add(this.panel2);
+            this.CrapsBoard.Controls.Add(this.panel1);
             this.CrapsBoard.Controls.Add(this.lblPlayerVal);
-            this.CrapsBoard.Controls.Add(this.lblPlayer);
             this.CrapsBoard.Controls.Add(this.lblGameState);
-            this.CrapsBoard.Controls.Add(this.lblDie2);
-            this.CrapsBoard.Controls.Add(this.lblDie1);
             this.CrapsBoard.Controls.Add(this.lblPointVal);
             this.CrapsBoard.Controls.Add(this.lblPoint);
             this.CrapsBoard.Controls.Add(this.btnRollEm);
@@ -181,37 +191,27 @@
             // 
             this.lblPlayerVal.AutoSize = true;
             this.lblPlayerVal.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPlayerVal.Location = new System.Drawing.Point(381, 422);
+            this.lblPlayerVal.Location = new System.Drawing.Point(186, 415);
             this.lblPlayerVal.Name = "lblPlayerVal";
             this.lblPlayerVal.Size = new System.Drawing.Size(168, 29);
             this.lblPlayerVal.TabIndex = 7;
             this.lblPlayerVal.Text = "Player\'s Name";
             // 
-            // lblPlayer
-            // 
-            this.lblPlayer.AutoSize = true;
-            this.lblPlayer.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPlayer.Location = new System.Drawing.Point(302, 422);
-            this.lblPlayer.Name = "lblPlayer";
-            this.lblPlayer.Size = new System.Drawing.Size(87, 29);
-            this.lblPlayer.TabIndex = 6;
-            this.lblPlayer.Text = "Player:";
-            // 
             // lblGameState
             // 
             this.lblGameState.AutoSize = true;
             this.lblGameState.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblGameState.Location = new System.Drawing.Point(366, 15);
+            this.lblGameState.Location = new System.Drawing.Point(264, 44);
             this.lblGameState.Name = "lblGameState";
-            this.lblGameState.Size = new System.Drawing.Size(139, 29);
+            this.lblGameState.Size = new System.Drawing.Size(134, 29);
             this.lblGameState.TabIndex = 5;
-            this.lblGameState.Text = "Game State";
+            this.lblGameState.Text = "New Game";
             // 
             // lblDie2
             // 
             this.lblDie2.AutoSize = true;
             this.lblDie2.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDie2.Location = new System.Drawing.Point(183, 337);
+            this.lblDie2.Location = new System.Drawing.Point(18, 35);
             this.lblDie2.Name = "lblDie2";
             this.lblDie2.Size = new System.Drawing.Size(76, 29);
             this.lblDie2.TabIndex = 4;
@@ -221,7 +221,7 @@
             // 
             this.lblDie1.AutoSize = true;
             this.lblDie1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDie1.Location = new System.Drawing.Point(58, 337);
+            this.lblDie1.Location = new System.Drawing.Point(16, 37);
             this.lblDie1.Name = "lblDie1";
             this.lblDie1.Size = new System.Drawing.Size(76, 29);
             this.lblDie1.TabIndex = 3;
@@ -231,7 +231,7 @@
             // 
             this.lblPointVal.AutoSize = true;
             this.lblPointVal.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPointVal.Location = new System.Drawing.Point(80, 15);
+            this.lblPointVal.Location = new System.Drawing.Point(112, 44);
             this.lblPointVal.Name = "lblPointVal";
             this.lblPointVal.Size = new System.Drawing.Size(26, 29);
             this.lblPointVal.TabIndex = 2;
@@ -241,7 +241,7 @@
             // 
             this.lblPoint.AutoSize = true;
             this.lblPoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPoint.Location = new System.Drawing.Point(6, 15);
+            this.lblPoint.Location = new System.Drawing.Point(32, 44);
             this.lblPoint.Name = "lblPoint";
             this.lblPoint.Size = new System.Drawing.Size(74, 29);
             this.lblPoint.TabIndex = 1;
@@ -249,9 +249,9 @@
             // 
             // btnRollEm
             // 
-            this.btnRollEm.Location = new System.Drawing.Point(59, 428);
+            this.btnRollEm.Location = new System.Drawing.Point(220, 359);
             this.btnRollEm.Name = "btnRollEm";
-            this.btnRollEm.Size = new System.Drawing.Size(75, 23);
+            this.btnRollEm.Size = new System.Drawing.Size(90, 41);
             this.btnRollEm.TabIndex = 0;
             this.btnRollEm.Text = "Roll\'Em";
             this.btnRollEm.UseVisualStyleBackColor = true;
@@ -263,6 +263,64 @@
             this.clearPlayersGamesToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             this.clearPlayersGamesToolStripMenuItem.Text = "Clear Player\'s Games";
             this.clearPlayersGamesToolStripMenuItem.Click += new System.EventHandler(this.clearPlayersGamesToolStripMenuItem_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Controls.Add(this.lblDie1);
+            this.panel1.Location = new System.Drawing.Point(122, 202);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(113, 107);
+            this.panel1.TabIndex = 8;
+            // 
+            // panel2
+            // 
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel2.Controls.Add(this.lblDie2);
+            this.panel2.Location = new System.Drawing.Point(290, 202);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(113, 107);
+            this.panel2.TabIndex = 9;
+            // 
+            // lblWins
+            // 
+            this.lblWins.AutoSize = true;
+            this.lblWins.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblWins.Location = new System.Drawing.Point(13, 401);
+            this.lblWins.Name = "lblWins";
+            this.lblWins.Size = new System.Drawing.Size(48, 20);
+            this.lblWins.TabIndex = 10;
+            this.lblWins.Text = "Wins:";
+            // 
+            // lblWinsVal
+            // 
+            this.lblWinsVal.AutoSize = true;
+            this.lblWinsVal.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblWinsVal.Location = new System.Drawing.Point(79, 401);
+            this.lblWinsVal.Name = "lblWinsVal";
+            this.lblWinsVal.Size = new System.Drawing.Size(18, 20);
+            this.lblWinsVal.TabIndex = 11;
+            this.lblWinsVal.Text = "0";
+            // 
+            // lblLosses
+            // 
+            this.lblLosses.AutoSize = true;
+            this.lblLosses.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLosses.Location = new System.Drawing.Point(13, 431);
+            this.lblLosses.Name = "lblLosses";
+            this.lblLosses.Size = new System.Drawing.Size(64, 20);
+            this.lblLosses.TabIndex = 12;
+            this.lblLosses.Text = "Losses:";
+            // 
+            // lblLossesVal
+            // 
+            this.lblLossesVal.AutoSize = true;
+            this.lblLossesVal.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLossesVal.Location = new System.Drawing.Point(79, 431);
+            this.lblLossesVal.Name = "lblLossesVal";
+            this.lblLossesVal.Size = new System.Drawing.Size(18, 20);
+            this.lblLossesVal.TabIndex = 13;
+            this.lblLossesVal.Text = "0";
             // 
             // Form1
             // 
@@ -282,6 +340,10 @@
             this.CrapsBoard.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GamesBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PlayerListBindingSource)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -309,8 +371,13 @@
         private System.Windows.Forms.ToolStripMenuItem EditPlayerProfileMenuItem;
         private System.Windows.Forms.Label lblGameState;
         private System.Windows.Forms.Label lblPlayerVal;
-        private System.Windows.Forms.Label lblPlayer;
         private System.Windows.Forms.ToolStripMenuItem clearPlayersGamesToolStripMenuItem;
+        private System.Windows.Forms.Label lblLossesVal;
+        private System.Windows.Forms.Label lblLosses;
+        private System.Windows.Forms.Label lblWinsVal;
+        private System.Windows.Forms.Label lblWins;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 

@@ -6,6 +6,7 @@ namespace GameModels
 {
     public enum GameStateEnum
     {
+        NewGame,
         Craps,
         SetPoint,
         Winner

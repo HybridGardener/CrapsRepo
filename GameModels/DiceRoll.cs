@@ -64,8 +64,6 @@ namespace GameModels
                 NotifyPropertyChanged();
             }
         }
-
-
         public int GameId
         {
             get => _gameId;

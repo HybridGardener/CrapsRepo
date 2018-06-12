@@ -19,16 +19,17 @@ namespace CrapsGame
         private ObservableListSource<Player> _players;
         private Player _newPlayer;
         private string _gameState;
+        private int _wins;
+        private int _losses;
         public static readonly Random numberGenerator = new Random();
-
 
         public MainController()
         {
 
             this.NewPlayer = new Player();
             Players = new ObservableListSource<Player>();
-            // LoadPlayers();
-            LoadPlayers_Dev();
+            GameState = "New Game!";
+            LoadPlayers();
             if (!Players.Any())
             {
                 SelectedPlayer = NewPlayer;
@@ -40,8 +41,7 @@ namespace CrapsGame
             }
             this.CurrentGame = new Game();
         }
-
-        public void LoadPlayers_Dev()
+        public void LoadPlayers()
         {
             using (var ctx = new GameContext())
             {
@@ -51,14 +51,16 @@ namespace CrapsGame
 
                 foreach (Player player in players)
                 {
-
+                    ctx.Entry(player).Collection(p => p.Games).Load();
+                    foreach (var roll in player.Games)
+                    {
+                        ctx.Entry(roll).Collection(p => p.DiceRolls).Load();
+                    }
                     var gBL = new ObservableListSource<Game>();
                     pBL.Add(player);
                     Players = pBL;
-
                 }
             }
-
         }
         public string GameState
         {
@@ -111,8 +113,26 @@ namespace CrapsGame
                 NotifyPropertyChanged();
             }
         }
-
-
+        public int Wins
+        {
+            get => _wins;
+            set
+            {
+                if (_wins == value) return;
+                _wins = value;
+                NotifyPropertyChanged();
+            }
+        }
+        public int Losses
+        {
+            get => _losses;
+            set
+            {
+                if (_losses == value) return;
+                _losses = value;
+                NotifyPropertyChanged();
+            }
+        }
         internal void CreateNewUser()
         {
             using (var ctx = new GameContext())
@@ -137,46 +157,7 @@ namespace CrapsGame
 
             }
         }
-        internal void SavePlayer()
-        {
-            switch (CurrentGame.RollInProgress.GameState)
-            {
-                case GameStateEnum.Craps:
-                    GameState = "Craps";
-                    break;
-                case GameStateEnum.SetPoint:
-                    GameState = "New Point Set";
-                    break;
-                case GameStateEnum.Winner:
-                    GameState = $"{SelectedPlayer.Name} has won!";
-                    break;
-            }
-
-            using (var ctx = new GameContext())
-            {
-                var player = ctx.Players.FirstOrDefault(p => p.Id == SelectedPlayer.Id);
-                if (player == null) return;
-                player = SelectedPlayer;
-
-                ctx.Games.Add(CurrentGame);
-                ctx.SaveChanges();
-
-            }
-            switch (CurrentGame.RollInProgress.GameState)
-            {
-                case GameStateEnum.Craps:
-                    GameState = "Craps";
-                    break;
-                case GameStateEnum.SetPoint:
-                    GameState = "New Point Set";
-                    return;
-
-                case GameStateEnum.Winner:
-                    GameState = $"{SelectedPlayer.Name} has won!";
-                    break;
-            }
-
-        }
+    
         internal void SetSelectedGame(object value)
         {
             var Game = (value as Game);
@@ -208,7 +189,6 @@ namespace CrapsGame
             }
 
         }
-
         internal void ClearPlayerGames()
         {
             using (var ctx = new GameContext())
@@ -225,7 +205,6 @@ namespace CrapsGame
                 ctx.SaveChanges();
             }
         }
-
         internal void EditPlayer()
         {
 
@@ -237,8 +216,6 @@ namespace CrapsGame
 
             }
         }
-
-
         internal void SetSelectedPlayer(object obj)
         {
             var player = (obj as Player);
@@ -293,7 +270,25 @@ namespace CrapsGame
                 }
             }
             CurrentGame.RollInProgress = rollInProgress;
-
+            switch (CurrentGame.RollInProgress.GameState)
+            {
+                case GameStateEnum.Craps:
+                    GameState = "Craps";
+                    CurrentGame.Point = 0;
+                    break;
+                case GameStateEnum.SetPoint:
+                    GameState = "New Point Set";
+                    return;
+                case GameStateEnum.Winner:
+                    GameState = $"{SelectedPlayer.Name} has won!";
+                    CurrentGame.Point = 0;
+                    break;
+            }
+            EFSave(rollInProgress);
+            
+        }
+        private void EFSave(DiceRoll rollInProgress)
+        {
             using (var ctx = new GameContext())
             {
                 var existingPlayer = ctx.Players.Where(p => p.Id == SelectedPlayer.Id).FirstOrDefault();
@@ -324,9 +319,6 @@ namespace CrapsGame
 
 
             }
-
-
-
         }
 
     }
