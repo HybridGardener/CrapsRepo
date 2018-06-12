@@ -77,7 +77,7 @@
             this.flowLayoutPanel1.Controls.Add(this.CrapsBoard);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(800, 467);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(991, 463);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // PlayerPanel
@@ -89,7 +89,7 @@
             this.PlayerPanel.Controls.Add(this.pnlCreateUser);
             this.PlayerPanel.Location = new System.Drawing.Point(3, 3);
             this.PlayerPanel.Name = "PlayerPanel";
-            this.PlayerPanel.Size = new System.Drawing.Size(203, 458);
+            this.PlayerPanel.Size = new System.Drawing.Size(286, 458);
             this.PlayerPanel.TabIndex = 1;
             // 
             // label2
@@ -106,7 +106,7 @@
             this.GamesListBox.FormattingEnabled = true;
             this.GamesListBox.Location = new System.Drawing.Point(4, 191);
             this.GamesListBox.Name = "GamesListBox";
-            this.GamesListBox.Size = new System.Drawing.Size(190, 212);
+            this.GamesListBox.Size = new System.Drawing.Size(279, 212);
             this.GamesListBox.TabIndex = 4;
             // 
             // PlayerListBox
@@ -115,7 +115,7 @@
             this.PlayerListBox.FormattingEnabled = true;
             this.PlayerListBox.Location = new System.Drawing.Point(3, 9);
             this.PlayerListBox.Name = "PlayerListBox";
-            this.PlayerListBox.Size = new System.Drawing.Size(191, 160);
+            this.PlayerListBox.Size = new System.Drawing.Size(280, 160);
             this.PlayerListBox.TabIndex = 0;
             this.PlayerListBox.SelectedValueChanged += new System.EventHandler(this.PlayerListBox_SelectedValueChanged);
             // 
@@ -156,7 +156,7 @@
             this.pnlCreateUser.Controls.Add(this.txtNewUserName);
             this.pnlCreateUser.Location = new System.Drawing.Point(3, 411);
             this.pnlCreateUser.Name = "pnlCreateUser";
-            this.pnlCreateUser.Size = new System.Drawing.Size(200, 47);
+            this.pnlCreateUser.Size = new System.Drawing.Size(280, 47);
             this.pnlCreateUser.TabIndex = 2;
             // 
             // label1
@@ -200,9 +200,9 @@
             this.CrapsBoard.Controls.Add(this.lblPointVal);
             this.CrapsBoard.Controls.Add(this.lblPoint);
             this.CrapsBoard.Controls.Add(this.btnRollEm);
-            this.CrapsBoard.Location = new System.Drawing.Point(212, 3);
+            this.CrapsBoard.Location = new System.Drawing.Point(295, 3);
             this.CrapsBoard.Name = "CrapsBoard";
-            this.CrapsBoard.Size = new System.Drawing.Size(576, 458);
+            this.CrapsBoard.Size = new System.Drawing.Size(532, 458);
             this.CrapsBoard.TabIndex = 2;
             // 
             // lblLossesVal
@@ -247,9 +247,10 @@
             // 
             // panel2
             // 
+            this.panel2.BackColor = System.Drawing.Color.FloralWhite;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel2.Controls.Add(this.lblDie2);
-            this.panel2.Location = new System.Drawing.Point(290, 202);
+            this.panel2.Location = new System.Drawing.Point(285, 172);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(113, 107);
             this.panel2.TabIndex = 9;
@@ -257,8 +258,9 @@
             // lblDie2
             // 
             this.lblDie2.AutoSize = true;
+            this.lblDie2.BackColor = System.Drawing.Color.FloralWhite;
             this.lblDie2.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDie2.Location = new System.Drawing.Point(18, 35);
+            this.lblDie2.Location = new System.Drawing.Point(15, 37);
             this.lblDie2.Name = "lblDie2";
             this.lblDie2.Size = new System.Drawing.Size(76, 29);
             this.lblDie2.TabIndex = 4;
@@ -266,9 +268,10 @@
             // 
             // panel1
             // 
+            this.panel1.BackColor = System.Drawing.Color.FloralWhite;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel1.Controls.Add(this.lblDie1);
-            this.panel1.Location = new System.Drawing.Point(122, 202);
+            this.panel1.Location = new System.Drawing.Point(108, 172);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(113, 107);
             this.panel1.TabIndex = 8;
@@ -287,17 +290,17 @@
             // 
             this.lblPlayerVal.AutoSize = true;
             this.lblPlayerVal.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPlayerVal.Location = new System.Drawing.Point(186, 415);
+            this.lblPlayerVal.Location = new System.Drawing.Point(240, 9);
             this.lblPlayerVal.Name = "lblPlayerVal";
-            this.lblPlayerVal.Size = new System.Drawing.Size(168, 29);
+            this.lblPlayerVal.Size = new System.Drawing.Size(27, 29);
             this.lblPlayerVal.TabIndex = 7;
-            this.lblPlayerVal.Text = "Player\'s Name";
+            this.lblPlayerVal.Text = "p";
             // 
             // lblGameState
             // 
             this.lblGameState.AutoSize = true;
             this.lblGameState.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblGameState.Location = new System.Drawing.Point(264, 44);
+            this.lblGameState.Location = new System.Drawing.Point(186, 112);
             this.lblGameState.Name = "lblGameState";
             this.lblGameState.Size = new System.Drawing.Size(134, 29);
             this.lblGameState.TabIndex = 5;
@@ -307,7 +310,7 @@
             // 
             this.lblPointVal.AutoSize = true;
             this.lblPointVal.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPointVal.Location = new System.Drawing.Point(112, 44);
+            this.lblPointVal.Location = new System.Drawing.Point(103, 9);
             this.lblPointVal.Name = "lblPointVal";
             this.lblPointVal.Size = new System.Drawing.Size(26, 29);
             this.lblPointVal.TabIndex = 2;
@@ -317,7 +320,7 @@
             // 
             this.lblPoint.AutoSize = true;
             this.lblPoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPoint.Location = new System.Drawing.Point(32, 44);
+            this.lblPoint.Location = new System.Drawing.Point(23, 9);
             this.lblPoint.Name = "lblPoint";
             this.lblPoint.Size = new System.Drawing.Size(74, 29);
             this.lblPoint.TabIndex = 1;
@@ -326,7 +329,7 @@
             // btnRollEm
             // 
             this.btnRollEm.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRollEm.Location = new System.Drawing.Point(220, 359);
+            this.btnRollEm.Location = new System.Drawing.Point(205, 362);
             this.btnRollEm.Name = "btnRollEm";
             this.btnRollEm.Size = new System.Drawing.Size(90, 41);
             this.btnRollEm.TabIndex = 0;
@@ -338,10 +341,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 467);
+            this.ClientSize = new System.Drawing.Size(826, 461);
             this.Controls.Add(this.flowLayoutPanel1);
+            this.MaximumSize = new System.Drawing.Size(842, 500);
+            this.MinimumSize = new System.Drawing.Size(842, 500);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Craps";
             this.flowLayoutPanel1.ResumeLayout(false);
             this.PlayerPanel.ResumeLayout(false);
             this.PlayerPanel.PerformLayout();
