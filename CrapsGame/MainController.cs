@@ -18,17 +18,15 @@ namespace CrapsGame
         private Game _currentGame;
         private ObservableListSource<Player> _players;
         private Player _newPlayer;
-        private string _gameState;
         private int _wins;
         private int _losses;
         public static readonly Random numberGenerator = new Random();
 
         public MainController()
         {
-
             this.NewPlayer = new Player();
             Players = new ObservableListSource<Player>();
-            GameState = "New Game!";
+
             LoadPlayers();
             if (!Players.Any())
             {
@@ -40,38 +38,10 @@ namespace CrapsGame
                 SetSelectedPlayer(x);
             }
             this.CurrentGame = new Game();
+            CurrentGame.GameState = "New Game!";
         }
-        public void LoadPlayers()
-        {
-            using (var ctx = new GameContext())
-            {
-                var players = ctx.Players.ToList();
-                if (!players.Any()) return;
-                var pBL = new ObservableListSource<Player>();
 
-                foreach (Player player in players)
-                {
-                    ctx.Entry(player).Collection(p => p.Games).Load();
-                    foreach (var roll in player.Games)
-                    {
-                        ctx.Entry(roll).Collection(p => p.DiceRolls).Load();
-                    }
-                    var gBL = new ObservableListSource<Game>();
-                    pBL.Add(player);
-                    Players = pBL;
-                }
-            }
-        }
-        public string GameState
-        {
-            get => _gameState;
-            set
-            {
-                if (_gameState == value) return;
-                _gameState = value;
-                NotifyPropertyChanged();
-            }
-        }
+
         public Player NewPlayer
         {
             get { return _newPlayer; }
@@ -133,6 +103,35 @@ namespace CrapsGame
                 NotifyPropertyChanged();
             }
         }
+        public void CalculateWinsAndLosses()
+        {
+            if (SelectedPlayer == null) return;
+            var wins = SelectedPlayer.Games.Where(p => p.DiceRolls.LastOrDefault()?.GameState == GameStateEnum.Winner);
+            var losses = SelectedPlayer.Games.Where(p => p.DiceRolls.LastOrDefault()?.GameState == GameStateEnum.Craps);
+            Wins = wins.Count();
+            Losses = losses.Count();
+        }
+        public void LoadPlayers()
+        {
+            using (var ctx = new GameContext())
+            {
+                var players = ctx.Players.ToList();
+                if (!players.Any()) return;
+                var pBL = new ObservableListSource<Player>();
+
+                foreach (Player player in players)
+                {
+                    ctx.Entry(player).Collection(p => p.Games).Load();
+                    foreach (var roll in player.Games)
+                    {
+                        ctx.Entry(roll).Collection(p => p.DiceRolls).Load();
+                    }
+                    var gBL = new ObservableListSource<Game>();
+                    pBL.Add(player);
+                    Players = pBL;
+                }
+            }
+        }
         internal void CreateNewUser()
         {
             using (var ctx = new GameContext())
@@ -157,15 +156,11 @@ namespace CrapsGame
 
             }
         }
-    
         internal void SetSelectedGame(object value)
         {
             var Game = (value as Game);
             if (Game == null) return;
             CurrentGame = Game;
-
-
-
         }
         internal void DeletePlayer()
         {
@@ -223,69 +218,104 @@ namespace CrapsGame
             if (SelectedPlayer != null && SelectedPlayer.Id == player.Id) return;
             SelectedPlayer = player;
             SetSelectedGame(new Game() { Player = player });
+            CalculateWinsAndLosses();
         }
         internal void Shoot()
         {
+           
             var rollInProgress = new DiceRoll() { Game = CurrentGame };
+            CurrentGame.TotalRolls++;
             rollInProgress.DieOne = numberGenerator.Next(1, 6);
             rollInProgress.DieTwo = numberGenerator.Next(1, 6);
             var sum = rollInProgress.Sum();
             if (CurrentGame.FirstToss)
             {
-                if (sum == 7 || sum == 11)
+                CurrentGame.FirstToss = false;
+                switch (sum)
                 {
-                    rollInProgress.GameState = GameStateEnum.Winner;
+                    case 2:
+                        CurrentGame.GameState = $"{SelectedPlayer.Name} rolled a Snake Eyes";
+                        rollInProgress.GameState = GameStateEnum.Craps;
+                        break;
+                    case int n when (n >= 3 && n <= 6 || n >= 8 && n <= 10):
+                        CurrentGame.GameState = $"{SelectedPlayer.Name} point set!";
+                        CurrentGame.Point = sum;
+                        rollInProgress.GameState = GameStateEnum.SetPoint;
+                        break;
+                    case int n when (n == 7 || n == 11):
+                        CurrentGame.GameState = $"{SelectedPlayer.Name} rolled a Natural!";
+                        rollInProgress.GameState = GameStateEnum.Winner;
+                        break;
+                    case 12:
+                        CurrentGame.GameState = $"{SelectedPlayer.Name} rolled a Midnight";
+                        rollInProgress.GameState = GameStateEnum.Craps;
+                        break;
+                }
 
-                }
-                else if (sum == 2 || sum == 3 || sum == 12)
-                {
-                    rollInProgress.GameState = GameStateEnum.Craps;
-
-                }
-                else if (sum == 4 || sum == 5 || sum == 6 || sum == 8 || sum == 9 || sum == 10)
-                {
-                    CurrentGame.Point = sum;
-                    rollInProgress.GameState = GameStateEnum.SetPoint;
-                }
             }
             else
             {
                 if (sum == CurrentGame.Point)
                 {
+                    CurrentGame.GameState = $"{SelectedPlayer.Name} Point Win!";
                     rollInProgress.GameState = GameStateEnum.Winner;
                 }
-                else if (sum == 2 || sum == 3 || sum == 12)
+                else
                 {
-                    rollInProgress.GameState = GameStateEnum.Craps;
+                    switch (sum)
+                    {
+                        case 2:
+                            CurrentGame.GameState = $"{SelectedPlayer.Name} rolled a Snake Eyes";
+                            rollInProgress.GameState = GameStateEnum.Craps;
+                            break;
+                        case int n when (n >= 3 && n <= 6 || n >= 8 && n <= 10):
+                            CurrentGame.GameState = $"{SelectedPlayer.Name} point set!";
+                            CurrentGame.Point = sum;
+                            rollInProgress.GameState = GameStateEnum.SetPoint;
+                            break;
+                        case 7:
+                            CurrentGame.GameState = $"{SelectedPlayer.Name} rolled seven..";
+                            rollInProgress.GameState = GameStateEnum.Craps;
+                            break;
+                        case 11:
+                            CurrentGame.GameState = $"{SelectedPlayer.Name} rolled eleven..";
+                            rollInProgress.GameState = GameStateEnum.Craps;
+                            break;
+                    }
+                   
+                }
 
-                }
-                else if (sum == 4 || sum == 5 || sum == 6 || sum == 8 || sum == 9 || sum == 10)
-                {
-                    CurrentGame.Point = sum;
-                    rollInProgress.GameState = GameStateEnum.SetPoint;
-                }
-                else if (sum == 7 || sum == 11)
-                {
-                    rollInProgress.GameState = GameStateEnum.Craps;
-                }
             }
             CurrentGame.RollInProgress = rollInProgress;
-            switch (CurrentGame.RollInProgress.GameState)
+            var gs = CurrentGame.RollInProgress.GameState;
+            switch (gs)
             {
                 case GameStateEnum.Craps:
-                    GameState = "Craps";
-                    CurrentGame.Point = 0;
+                    
+                    SelectedPlayer.Games.Add(CurrentGame);
+                    Losses++;
                     break;
                 case GameStateEnum.SetPoint:
-                    GameState = "New Point Set";
+                    CurrentGame.GameState = "New Point Set";
                     return;
                 case GameStateEnum.Winner:
-                    GameState = $"{SelectedPlayer.Name} has won!";
-                    CurrentGame.Point = 0;
+                    CurrentGame.GameState = $"{SelectedPlayer.Name} won!";
+                    SelectedPlayer.Games.Add(CurrentGame);
+                    Wins++;
+                    
                     break;
             }
-            EFSave(rollInProgress);
+
+            CurrentGame.SumOfDice = sum;
+            CurrentGame.DiceRolls.Add(rollInProgress);
             
+            EFSave(rollInProgress);
+            if (gs == GameStateEnum.Craps || gs == GameStateEnum.Winner)
+            {
+                CurrentGame.Point = 0;
+                CurrentGame = new Game() { Player = SelectedPlayer };
+            }
+
         }
         private void EFSave(DiceRoll rollInProgress)
         {
@@ -305,7 +335,6 @@ namespace CrapsGame
                     {
                         CurrentGame.Player = existingPlayer;
                         ctx.Games.Add(CurrentGame);
-                        ctx.DiceRolls.Add(rollInProgress);
                         ctx.SaveChanges();
                     }
                     else

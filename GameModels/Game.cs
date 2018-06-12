@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Text;
 
 namespace GameModels
@@ -19,6 +20,10 @@ namespace GameModels
         private DiceRoll _rollInProgress;
         private Player _player;
         private int _playerId;
+        private int _totalRolls;
+        private int _sumOfDice;
+        private string _gameState;
+
         private ObservableListSource<DiceRoll> _diceRolls;
 
 
@@ -85,6 +90,27 @@ namespace GameModels
                 NotifyPropertyChanged();
             }
         }
+        public int TotalRolls
+        {
+            get => _totalRolls;
+            set
+            {
+                if (_totalRolls == value) return;
+                _totalRolls = value;
+                NotifyPropertyChanged();
+            }
+        }
+        public int SumOfDice
+        {
+            get => _sumOfDice;
+            set
+            {
+                if (_sumOfDice == value) return;
+                _sumOfDice = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         [NotMapped]
         public DiceRoll RollInProgress
         {
@@ -97,7 +123,19 @@ namespace GameModels
             }
         }
 
-          public ObservableListSource<DiceRoll> DiceRolls
+   
+        public string GameState
+        {
+            get => _gameState;
+            set
+            {
+                if (_gameState == value) return;
+                _gameState = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public ObservableListSource<DiceRoll> DiceRolls
         {
             get { return _diceRolls; }
             set
@@ -106,6 +144,11 @@ namespace GameModels
                 _diceRolls = value;
                 NotifyPropertyChanged();
             }
+        }
+
+        public override string ToString()
+        {
+            return $"{Id} | {GameState} Tossess:{TotalRolls}";
         }
       
 

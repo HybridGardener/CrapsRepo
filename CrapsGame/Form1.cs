@@ -12,7 +12,7 @@ namespace CrapsGame
 {
     public partial class Form1 : Form
     {
-        public MainController mainController;
+        private MainController mainController;
         public Form1()
         {
             InitializeComponent();
@@ -20,8 +20,6 @@ namespace CrapsGame
             InitializeDataBindings();
 
         }
-       
-
         private void InitializeDataBindings()
         {
             RebindPlayers();
@@ -30,39 +28,21 @@ namespace CrapsGame
             RebindGames();
             RebindDice();
             RebindPoint();
-            cmbGames.SelectedValueChanged += CmbGames_SelectedValueChanged;
-
+            mainController.CalculateWinsAndLosses();
+            RebindWinLossLabels();
         }
-
-        private void CmbGames_SelectedValueChanged(object sender, EventArgs e)
-        {
-            var cmb = (sender as ComboBox);
-            var value = cmb.SelectedItem;
-            mainController.SetSelectedGame(value);
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtNewUserName_TextChanged(object sender, EventArgs e)
-        {
-            var tb = (sender as TextBox);
-            btnAddUser.Enabled = !string.IsNullOrEmpty(tb.Text);
-          
-        }
-
+        #region Bind/Rebind
         private void RebindCurrentPlayerLable()
         {
             lblPlayerVal.DataBindings.Clear();
-            lblPlayerVal.DataBindings.Add("Text", mainController.SelectedPlayer, "Name",false,DataSourceUpdateMode.OnPropertyChanged);
+            if (mainController.SelectedPlayer == null) return;
+            lblPlayerVal.DataBindings.Add("Text", mainController.SelectedPlayer, "Name", false, DataSourceUpdateMode.OnPropertyChanged);
         }
         private void RebindGames()
         {
-            cmbGames.DataBindings.Clear();
-            cmbGames.DataSource = mainController.SelectedPlayer?.Games;
-            cmbGames.DisplayMember = "Id";
+            GamesListBox.DataBindings.Clear();
+            GamesListBox.DataSource = mainController.SelectedPlayer?.Games;
+            GamesListBox.DisplayMember = "GameDisplay";
         }
         private void RebindDice()
         {
@@ -71,7 +51,7 @@ namespace CrapsGame
 
             lblDie2.DataBindings.Clear();
             lblDie2.DataBindings.Add("Text", mainController.CurrentGame.RollInProgress, "DieTwo", false, DataSourceUpdateMode.OnPropertyChanged, 0);
-  }
+        }
         private void RebindPoint()
         {
 
@@ -85,29 +65,28 @@ namespace CrapsGame
             PlayerListBindingSource.Clear();
             mainController.LoadPlayers();
             PlayerListBindingSource.DataSource = mainController.Players;
-            mainController.SelectedPlayer = mainController.Players.FirstOrDefault(p=>p.Id == playerId);
+            mainController.SelectedPlayer = mainController.Players.FirstOrDefault(p => p.Id == playerId);
             PlayerListBox.DataSource = mainController.Players;
             PlayerListBox.DisplayMember = "Name";
         }
         private void UpdateGameState()
         {
             lblGameState.DataBindings.Clear();
-            lblGameState.DataBindings.Add("Text", mainController.CurrentGame.RollInProgress, "GameState", false, DataSourceUpdateMode.OnPropertyChanged);
+            lblGameState.DataBindings.Add("Text", mainController.CurrentGame, "GameState", false, DataSourceUpdateMode.OnPropertyChanged);
         }
-
         private void UpdatePlayerBinding()
         {
             lblPlayerVal.DataBindings.Clear();
             lblPlayerVal.DataBindings.Add("Text", mainController.SelectedPlayer, "Name", false, DataSourceUpdateMode.OnPropertyChanged, string.Empty);
+          
+
         }
-     
         private void RebindNewUserText()
         {
             txtNewUserName.DataBindings.Clear();
             txtNewUserName.Text = string.Empty;
             txtNewUserName.DataBindings.Add("Text", mainController.NewPlayer, "Name", false, DataSourceUpdateMode.OnPropertyChanged, string.Empty);
         }
-
         private void RebindWinLossLabels()
         {
             lblWinsVal.DataBindings.Clear();
@@ -116,33 +95,44 @@ namespace CrapsGame
             lblLossesVal.DataBindings.Clear();
             lblLossesVal.DataBindings.Add("Text", mainController, "Losses", false, DataSourceUpdateMode.OnPropertyChanged);
         }
+        #endregion
+        #region Events
+        private void txtNewUserName_TextChanged(object sender, EventArgs e)
+        {
+            var tb = (sender as TextBox);
+            btnAddUser.Enabled = !string.IsNullOrEmpty(tb.Text);
+
+        }
         private void btnAddUser_Click(object sender, EventArgs e)
         {
             mainController.CreateNewUser();
             RebindNewUserText();
             RebindPlayers();
-        }
+            btnAddUser.Text = "Create";
+          
 
+        }
         private void btnRollEm_Click(object sender, EventArgs e)
         {
             mainController.Shoot();
-            mainController.GameState = "New Game";
             RebindDice();
             RebindPoint();
             UpdateGameState();
             UpdatePlayerBinding();
             RebindCurrentPlayerLable();
-
+           
+            RebindWinLossLabels();
         }
-
         private void DeletePlayerMenuItem_Click(object sender, EventArgs e)
         {
-            mainController.DeletePlayer();
-            RebindPlayers();
-            RebindCurrentPlayerLable();
-            
+            var result = MessageBox.Show($"Are you sure you would like to delete {mainController.SelectedPlayer.Name}'s profile?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                mainController.DeletePlayer();
+                RebindPlayers();
+                RebindCurrentPlayerLable();
+            }
         }
-
         private void PlayerListBox_SelectedValueChanged(object sender, EventArgs e)
         {
             var val = (sender as ListBox);
@@ -153,22 +143,29 @@ namespace CrapsGame
             RebindDice();
             RebindCurrentPlayerLable();
             RebindGames();
-
-
+            mainController.CalculateWinsAndLosses();
+            RebindWinLossLabels();
         }
-
         private void EditPlayerProfileMenuItem_Click(object sender, EventArgs e)
         {
             mainController.EditPlayer();
+            btnAddUser.Text = "Save";
             RebindNewUserText();
             RebindCurrentPlayerLable();
-            
         }
-
         private void clearPlayersGamesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            mainController.ClearPlayerGames();
-            RebindGames();
+            var result = MessageBox.Show($"Are you sure you would like to clear all games from {mainController.SelectedPlayer.Name}'s profile?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                mainController.ClearPlayerGames();
+                RebindPlayers();
+                RebindGames();
+                RebindWinLossLabels();
+                RebindDice();
+                
+            }
         }
+        #endregion
     }
 }
