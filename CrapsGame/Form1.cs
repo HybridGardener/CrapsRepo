@@ -30,6 +30,7 @@ namespace CrapsGame
             RebindPoint();
             mainController.CalculateWinsAndLosses();
             RebindWinLossLabels();
+            if (mainController.SelectedPlayer == null) btnRollEm.Enabled = false;
         }
         #region Bind/Rebind
         private void RebindCurrentPlayerLable()
@@ -68,6 +69,8 @@ namespace CrapsGame
             mainController.SelectedPlayer = mainController.Players.FirstOrDefault(p => p.Id == playerId);
             PlayerListBox.DataSource = mainController.Players;
             PlayerListBox.DisplayMember = "Name";
+            if (mainController.SelectedPlayer == null) btnRollEm.Enabled = false;
+
         }
         private void UpdateGameState()
         {
